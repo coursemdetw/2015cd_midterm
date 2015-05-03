@@ -69,6 +69,55 @@ class Midterm(object):
     def index(self):
         #return "Github 2015cd_midterm 已經與 OpenShift 網站同步!"
         return "學號: scrum2"
+    @cherrypy.expose
+    # N 為齒數, M 為模數, P 為壓力角
+    def spur(self, N=20, M=5, P=15):
+        outstring = '''
+    <!DOCTYPE html> 
+    <html>
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <!-- 載入 brython.js -->
+    <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
+    <script src="/static/Cango2D.js" type="text/javascript"></script>
+    <script src="/static/gearUtils-04.js" type="text/javascript"></script>
+    </head>
+    <!-- 啟動 brython() -->
+    <body onload="brython()">
+        
+    <form method=POST action=spuraction>
+    齒數:<input type=text name=N value='''+str(N)+'''><br />
+    模數:<input type=text name=M value = '''+str(M)+'''><br />
+    壓力角:<input type=text name=P value = '''+str(P)+'''><br />
+    <input type=submit value=send>
+    </form>
+    </body>
+    </html>
+    '''
+
+        return outstring
+    @cherrypy.expose
+    # N 為齒數, M 為模數, P 為壓力角
+    def spuraction(self, N=20, M=5, P=15):
+        output = '''
+        <!doctype html><html>
+        <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        <title>2015CD Midterm</title>
+        </head> 
+        <body>
+        '''
+        output += "齒數為"+str(N)+"<br />"
+        output += "模數為"+str(M)+"<br />"
+        output += "壓力角為"+str(P)+"<br />"
+        output +='''<br /><a href="/spur">spur</a>(按下後再輸入)<br />
+        </body>
+        </html>
+        '''
+        
+        return output
+        
+        
 ################# (4) 程式啟動區
 # 配合程式檔案所在目錄設定靜態目錄或靜態檔案
 application_conf = {'/static':{

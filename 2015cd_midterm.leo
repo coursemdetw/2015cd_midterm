@@ -27,13 +27,15 @@
 <v t="2014fall.20141212095015.1777" a="E"><vh>class Midterm</vh>
 <v t="amd.20150503182609.1"><vh>__init__</vh></v>
 <v t="amd.20150503173602.1"><vh>index</vh></v>
+<v t="amd.20150503183542.1"><vh>spur</vh></v>
+<v t="amd.20150503183546.1"><vh>spuraction</vh></v>
 </v>
 </v>
 <v t="2014fall.20141212095015.1780"><vh>@edit setup.py</vh></v>
 </v>
 <v t="amd.20150503172957.1" a="E"><vh>以下為參考檔案</vh>
 <v t="amd.20150503173029.1" a="E"><vh>@path ref</vh>
-<v t="amd.20150503173008.1"><vh>@clean wsgi.py</vh>
+<v t="amd.20150503173008.1" a="E"><vh>@clean wsgi.py</vh>
 <v t="amd.20150503173008.2"><vh>&lt;&lt;declarations&gt;&gt; (wsgi)</vh></v>
 <v t="amd.20150503173008.3" a="E"><vh>class Midterm</vh>
 <v t="amd.20150503173008.4"><vh>__init__</vh></v>
@@ -1882,5 +1884,54 @@ OpenShift 網站:
 
 http://2015cdmidterm-scrum2mdetw.rhcloud.com/</t>
 <t tx="amd.20150503183108.1"></t>
+<t tx="amd.20150503183542.1">@cherrypy.expose
+# N 為齒數, M 為模數, P 為壓力角
+def spur(self, N=20, M=5, P=15):
+    outstring = '''
+&lt;!DOCTYPE html&gt; 
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
+&lt;!-- 載入 brython.js --&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script src="/static/Cango2D.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="/static/gearUtils-04.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;!-- 啟動 brython() --&gt;
+&lt;body onload="brython()"&gt;
+    
+&lt;form method=POST action=spuraction&gt;
+齒數:&lt;input type=text name=N value='''+str(N)+'''&gt;&lt;br /&gt;
+模數:&lt;input type=text name=M value = '''+str(M)+'''&gt;&lt;br /&gt;
+壓力角:&lt;input type=text name=P value = '''+str(P)+'''&gt;&lt;br /&gt;
+&lt;input type=submit value=send&gt;
+&lt;/form&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+'''
+
+    return outstring</t>
+<t tx="amd.20150503183546.1">@cherrypy.expose
+# N 為齒數, M 為模數, P 為壓力角
+def spuraction(self, N=20, M=5, P=15):
+    output = '''
+    &lt;!doctype html&gt;&lt;html&gt;
+    &lt;head&gt;
+    &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
+    &lt;title&gt;2015CD Midterm&lt;/title&gt;
+    &lt;/head&gt; 
+    &lt;body&gt;
+    '''
+    output += "齒數為"+str(N)+"&lt;br /&gt;"
+    output += "模數為"+str(M)+"&lt;br /&gt;"
+    output += "壓力角為"+str(P)+"&lt;br /&gt;"
+    output +='''&lt;br /&gt;&lt;a href="/spur"&gt;spur&lt;/a&gt;(按下後再輸入)&lt;br /&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+    '''
+    
+    return output
+    
+    </t>
 </tnodes>
 </leo_file>
