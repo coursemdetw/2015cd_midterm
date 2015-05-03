@@ -67,7 +67,8 @@ class Midterm(object):
     # index 方法為 CherryPy 各類別成員方法中的內建(default)方法, 當使用者執行時未指定方法, 系統將會優先執行 index 方法
     # 有 self 的方法為類別中的成員方法, Python 程式透過此一 self 在各成員方法間傳遞物件內容
     def index(self):
-        return "Github 2015cd_midterm 已經與 OpenShift 網站同步!"
+        #return "Github 2015cd_midterm 已經與 OpenShift 網站同步!"
+        return "學號: scrum2"
 ################# (4) 程式啟動區
 # 配合程式檔案所在目錄設定靜態目錄或靜態檔案
 application_conf = {'/static':{

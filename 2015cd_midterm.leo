@@ -17,6 +17,8 @@
 <v t="2015.20150330144929.1714" a="E"><vh>以下為協同產品設計實習期中考試</vh>
 <v t="amd.20150503180635.1" a="E"><vh>與 OpenShift 應用程式同步</vh>
 <v t="amd.20150503182305.1"><vh>錯誤訊息</vh></v>
+<v t="amd.20150503182956.1"><vh>已經完成 Github 倉儲與 OpenShift 同步</vh></v>
+<v t="amd.20150503183108.1"><vh>傳回學號</vh></v>
 </v>
 </v>
 <v t="2014fall.20141212095015.1774" a="E"><vh>@path ./</vh>
@@ -1839,7 +1841,8 @@ class Spur(object):
 # index 方法為 CherryPy 各類別成員方法中的內建(default)方法, 當使用者執行時未指定方法, 系統將會優先執行 index 方法
 # 有 self 的方法為類別中的成員方法, Python 程式透過此一 self 在各成員方法間傳遞物件內容
 def index(self):
-    return "Github 2015cd_midterm 已經與 OpenShift 網站同步!"
+    #return "Github 2015cd_midterm 已經與 OpenShift 網站同步!"
+    return "學號: scrum2"
 </t>
 <t tx="amd.20150503180635.1">第1時間因為將 gear.py 移到 ref 目錄下, 但是沒有處理 wsgi.py 內部的 import gear
 
@@ -1871,5 +1874,13 @@ def index(self):
         except:
             print("mkdir error")
 </t>
+<t tx="amd.20150503182956.1">Github 倉儲:
+
+https://github.com/coursemdetw/2015cd_midterm
+
+OpenShift 網站:
+
+http://2015cdmidterm-scrum2mdetw.rhcloud.com/</t>
+<t tx="amd.20150503183108.1"></t>
 </tnodes>
 </leo_file>
