@@ -29,7 +29,12 @@
 <v t="amd.20150503173602.1"><vh>index</vh></v>
 <v t="amd.20150503183542.1"><vh>spur</vh></v>
 <v t="amd.20150503183546.1"><vh>spuraction</vh></v>
+<v t="amd.20150503185058.1"><vh>drawspur</vh></v>
+<v t="amd.20150503185210.1"><vh>drawspuraction</vh></v>
 </v>
+</v>
+<v t="amd.20150503185513.1" a="E"><vh>@path static/Brython3.1.1-20150328-091302/Lib/site-packages/</vh>
+<v t="amd.20150503185513.2"><vh>@edit spur.py</vh></v>
 </v>
 <v t="2014fall.20141212095015.1780"><vh>@edit setup.py</vh></v>
 </v>
@@ -1843,8 +1848,20 @@ class Spur(object):
 # index 方法為 CherryPy 各類別成員方法中的內建(default)方法, 當使用者執行時未指定方法, 系統將會優先執行 index 方法
 # 有 self 的方法為類別中的成員方法, Python 程式透過此一 self 在各成員方法間傳遞物件內容
 def index(self):
-    #return "Github 2015cd_midterm 已經與 OpenShift 網站同步!"
-    return "學號: scrum2"
+    outstring = '''
+    &lt;!DOCTYPE html&gt; 
+    &lt;html&gt;
+    &lt;head&gt;
+    &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;a href="spur"&gt;spur&lt;/a&gt;&lt;br /&gt;
+    &lt;a href="drawspur"&gt;drawspur&lt;/a&gt;&lt;br /&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+    '''
+    
+    return outstring
 </t>
 <t tx="amd.20150503180635.1">第1時間因為將 gear.py 移到 ref 目錄下, 但是沒有處理 wsgi.py 內部的 import gear
 
@@ -1894,8 +1911,6 @@ def spur(self, N=20, M=5, P=15):
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
 &lt;!-- 載入 brython.js --&gt;
 &lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
-&lt;script src="/static/Cango2D.js" type="text/javascript"&gt;&lt;/script&gt;
-&lt;script src="/static/gearUtils-04.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;!-- 啟動 brython() --&gt;
 &lt;body onload="brython()"&gt;
@@ -1906,6 +1921,7 @@ def spur(self, N=20, M=5, P=15):
 壓力角:&lt;input type=text name=P value = '''+str(P)+'''&gt;&lt;br /&gt;
 &lt;input type=submit value=send&gt;
 &lt;/form&gt;
+&lt;br /&gt;&lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 '''
@@ -1925,7 +1941,8 @@ def spuraction(self, N=20, M=5, P=15):
     output += "齒數為"+str(N)+"&lt;br /&gt;"
     output += "模數為"+str(M)+"&lt;br /&gt;"
     output += "壓力角為"+str(P)+"&lt;br /&gt;"
-    output +='''&lt;br /&gt;&lt;a href="/spur"&gt;spur&lt;/a&gt;(按下後再輸入)&lt;br /&gt;
+    output +='''&lt;br /&gt;&lt;a href="/spur"&gt;spur&lt;/a&gt;(按下後再輸入)&lt;br /&gt;'''
+    output +='''&lt;br /&gt;&lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
     &lt;/body&gt;
     &lt;/html&gt;
     '''
@@ -1933,5 +1950,78 @@ def spuraction(self, N=20, M=5, P=15):
     return output
     
     </t>
+<t tx="amd.20150503185058.1">@cherrypy.expose
+# N 為齒數, M 為模數, P 為壓力角
+def drawspur(self, N=20, M=5, P=15):
+    outstring = '''
+&lt;!DOCTYPE html&gt; 
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
+&lt;!-- 載入 brython.js --&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;!-- 啟動 brython() --&gt;
+&lt;body onload="brython()"&gt;
+    
+&lt;form method=POST action=drawspuraction&gt;
+齒數:&lt;input type=text name=N value='''+str(N)+'''&gt;&lt;br /&gt;
+模數:&lt;input type=text name=M value = '''+str(M)+'''&gt;&lt;br /&gt;
+壓力角:&lt;input type=text name=P value = '''+str(P)+'''&gt;&lt;br /&gt;
+&lt;input type=submit value=畫出正齒輪輪廓&gt;
+&lt;/form&gt;
+&lt;br /&gt;&lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+'''
+
+    return outstring</t>
+<t tx="amd.20150503185210.1">@cherrypy.expose
+# N 為齒數, M 為模數, P 為壓力角
+def drawspuraction(self, N=20, M=5, P=15):
+    outstring = '''
+&lt;!DOCTYPE html&gt; 
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
+&lt;!-- 載入 brython.js --&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;!-- 啟動 brython() --&gt;
+&lt;body onload="brython()"&gt;
+&lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
+    
+&lt;!-- 以下為 canvas 畫圖程式 --&gt;
+&lt;script type="text/python"&gt;
+# 從 browser 導入 document
+from browser import document
+from math import *
+# 請注意, 這裡導入位於 Lib/site-packages 目錄下的 spur.py 檔案
+import spur
+
+# 準備在 id="plotarea" 的 canvas 中繪圖
+canvas = document["plotarea"]
+ctx = canvas.getContext("2d")
+
+# 以下利用 spur.py 程式進行繪圖
+# N 為齒數
+N = '''+str(N)+'''
+# M 為模數
+M = '''+str(M)+'''
+# 壓力角 P 單位為角度
+P = '''+str(P)+'''
+# 計算兩齒輪的節圓半徑
+rp = N*M/2
+
+spur.Spur(ctx).Gear(600, 600, rp, N, P, "blue")
+
+&lt;/script&gt;
+&lt;canvas id="plotarea" width="1200" height="1200"&gt;&lt;/canvas&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+'''
+
+    return outstring</t>
+<t tx="amd.20150503185513.1"></t>
 </tnodes>
 </leo_file>

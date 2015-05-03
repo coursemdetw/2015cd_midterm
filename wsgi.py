@@ -67,8 +67,20 @@ class Midterm(object):
     # index 方法為 CherryPy 各類別成員方法中的內建(default)方法, 當使用者執行時未指定方法, 系統將會優先執行 index 方法
     # 有 self 的方法為類別中的成員方法, Python 程式透過此一 self 在各成員方法間傳遞物件內容
     def index(self):
-        #return "Github 2015cd_midterm 已經與 OpenShift 網站同步!"
-        return "學號: scrum2"
+        outstring = '''
+        <!DOCTYPE html> 
+        <html>
+        <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8">
+        </head>
+        <body>
+        <a href="spur">spur</a><br />
+        <a href="drawspur">drawspur</a><br />
+        </body>
+        </html>
+        '''
+        
+        return outstring
     @cherrypy.expose
     # N 為齒數, M 為模數, P 為壓力角
     def spur(self, N=20, M=5, P=15):
@@ -79,8 +91,6 @@ class Midterm(object):
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <!-- 載入 brython.js -->
     <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
-    <script src="/static/Cango2D.js" type="text/javascript"></script>
-    <script src="/static/gearUtils-04.js" type="text/javascript"></script>
     </head>
     <!-- 啟動 brython() -->
     <body onload="brython()">
@@ -91,6 +101,7 @@ class Midterm(object):
     壓力角:<input type=text name=P value = '''+str(P)+'''><br />
     <input type=submit value=send>
     </form>
+    <br /><a href="index">index</a><br />
     </body>
     </html>
     '''
@@ -110,7 +121,8 @@ class Midterm(object):
         output += "齒數為"+str(N)+"<br />"
         output += "模數為"+str(M)+"<br />"
         output += "壓力角為"+str(P)+"<br />"
-        output +='''<br /><a href="/spur">spur</a>(按下後再輸入)<br />
+        output +='''<br /><a href="/spur">spur</a>(按下後再輸入)<br />'''
+        output +='''<br /><a href="index">index</a><br />
         </body>
         </html>
         '''
@@ -118,6 +130,78 @@ class Midterm(object):
         return output
         
         
+    @cherrypy.expose
+    # N 為齒數, M 為模數, P 為壓力角
+    def drawspur(self, N=20, M=5, P=15):
+        outstring = '''
+    <!DOCTYPE html> 
+    <html>
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <!-- 載入 brython.js -->
+    <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
+    </head>
+    <!-- 啟動 brython() -->
+    <body onload="brython()">
+        
+    <form method=POST action=drawspuraction>
+    齒數:<input type=text name=N value='''+str(N)+'''><br />
+    模數:<input type=text name=M value = '''+str(M)+'''><br />
+    壓力角:<input type=text name=P value = '''+str(P)+'''><br />
+    <input type=submit value=畫出正齒輪輪廓>
+    </form>
+    <br /><a href="index">index</a><br />
+    </body>
+    </html>
+    '''
+
+        return outstring
+    @cherrypy.expose
+    # N 為齒數, M 為模數, P 為壓力角
+    def drawspuraction(self, N=20, M=5, P=15):
+        outstring = '''
+    <!DOCTYPE html> 
+    <html>
+    <head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <!-- 載入 brython.js -->
+    <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
+    </head>
+    <!-- 啟動 brython() -->
+    <body onload="brython()">
+    <a href="index">index</a><br />
+        
+    <!-- 以下為 canvas 畫圖程式 -->
+    <script type="text/python">
+    # 從 browser 導入 document
+    from browser import document
+    from math import *
+    # 請注意, 這裡導入位於 Lib/site-packages 目錄下的 spur.py 檔案
+    import spur
+
+    # 準備在 id="plotarea" 的 canvas 中繪圖
+    canvas = document["plotarea"]
+    ctx = canvas.getContext("2d")
+
+    # 以下利用 spur.py 程式進行繪圖
+    # N 為齒數
+    N = '''+str(N)+'''
+    # M 為模數
+    M = '''+str(M)+'''
+    # 壓力角 P 單位為角度
+    P = '''+str(P)+'''
+    # 計算兩齒輪的節圓半徑
+    rp = N*M/2
+
+    spur.Spur(ctx).Gear(600, 600, rp, N, P, "blue")
+
+    </script>
+    <canvas id="plotarea" width="1200" height="1200"></canvas>
+    </body>
+    </html>
+    '''
+
+        return outstring
 ################# (4) 程式啟動區
 # 配合程式檔案所在目錄設定靜態目錄或靜態檔案
 application_conf = {'/static':{
