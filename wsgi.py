@@ -12,7 +12,7 @@ import os
 # 導入 random 模組
 import random
 # 導入 gear 模組
-import gear
+#import gear
 
 ################# (2) 廣域變數設定區
 # 確定程式檔案所在目錄, 在 Windows 下有最後的反斜線
@@ -27,14 +27,7 @@ else:
     download_root_dir = _curdir + "/local_data/"
     data_dir = _curdir + "/local_data/"
 
-'''以下為近端 input() 與 for 迴圈應用的程式碼, 若要將程式送到 OpenShift 執行, 除了採用 CherryPy 網際框架外, 還要轉為 html 列印
-# 利用 input() 取得的資料型別為字串
-toprint = input("要印甚麼內容?")
-# 若要將 input() 取得的字串轉為整數使用, 必須利用 int() 轉換
-repeat_no = int(input("重複列印幾次?"))
-for i in range(repeat_no):
-    print(toprint)
-'''
+
 ################# (3) 程式類別定義區
 # 以下改用 CherryPy 網際框架程式架構
 # 以下為 Hello 類別的設計內容, 其中的 object 使用, 表示 Hello 類別繼承 object 的所有特性, 包括方法與屬性設計
@@ -52,6 +45,23 @@ class Midterm(object):
     'tools.sessions.timeout' : 60
     }
 
+    def __init__(self):
+        # hope to create downloads and images directories　
+        if not os.path.isdir(download_root_dir+"downloads"):
+            try:
+                os.makedirs(download_root_dir+"downloads")
+            except:
+                print("mkdir error")
+        if not os.path.isdir(download_root_dir+"images"):
+            try:
+                os.makedirs(download_root_dir+"images")
+            except:
+                print("mkdir error")
+        if not os.path.isdir(download_root_dir+"tmp"):
+            try:
+                os.makedirs(download_root_dir+"tmp")
+            except:
+                print("mkdir error")
     # 以 @ 開頭的 cherrypy.expose 為 decorator, 用來表示隨後的成員方法, 可以直接讓使用者以 URL 連結執行
     @cherrypy.expose
     # index 方法為 CherryPy 各類別成員方法中的內建(default)方法, 當使用者執行時未指定方法, 系統將會優先執行 index 方法
@@ -73,7 +83,7 @@ application_conf = {'/static':{
     }
     
 root = Midterm()
-root.gear = gear.Gear()
+#root.gear = gear.Gear()
 
 if 'OPENSHIFT_REPO_DIR' in os.environ.keys():
     # 表示在 OpenSfhit 執行
@@ -81,4 +91,3 @@ if 'OPENSHIFT_REPO_DIR' in os.environ.keys():
 else:
     # 表示在近端執行
     cherrypy.quickstart(root, config=application_conf)
-

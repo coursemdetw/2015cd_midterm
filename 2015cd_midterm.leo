@@ -14,11 +14,16 @@
 <v t="2014fall.20141212095015.1785"><vh>@data qt-gui-plugin-style-sheet</vh></v>
 <v t="2014fall.20141212095015.1786"><vh>@string initial_split_orientation = horizontal</vh></v>
 </v>
-<v t="2015.20150330144929.1714"><vh>以下為協同產品設計實習期中考試</vh></v>
+<v t="2015.20150330144929.1714" a="E"><vh>以下為協同產品設計實習期中考試</vh>
+<v t="amd.20150503180635.1" a="E"><vh>與 OpenShift 應用程式同步</vh>
+<v t="amd.20150503182305.1"><vh>錯誤訊息</vh></v>
+</v>
+</v>
 <v t="2014fall.20141212095015.1774" a="E"><vh>@path ./</vh>
 <v t="2014fall.20141212095015.1775" a="E"><vh>@clean wsgi.py</vh>
 <v t="2014fall.20141212095015.1776"><vh>&lt;&lt;declarations&gt;&gt; (wsgi)</vh></v>
 <v t="2014fall.20141212095015.1777" a="E"><vh>class Midterm</vh>
+<v t="amd.20150503182609.1"><vh>__init__</vh></v>
 <v t="amd.20150503173602.1"><vh>index</vh></v>
 </v>
 </v>
@@ -91,7 +96,7 @@ application_conf = {'/static':{
     }
     
 root = Midterm()
-root.gear = gear.Gear()
+#root.gear = gear.Gear()
 
 if 'OPENSHIFT_REPO_DIR' in os.environ.keys():
     # 表示在 OpenSfhit 執行
@@ -106,7 +111,7 @@ import os
 # 導入 random 模組
 import random
 # 導入 gear 模組
-import gear
+#import gear
 
 ################# (2) 廣域變數設定區
 # 確定程式檔案所在目錄, 在 Windows 下有最後的反斜線
@@ -121,14 +126,7 @@ else:
     download_root_dir = _curdir + "/local_data/"
     data_dir = _curdir + "/local_data/"
 
-'''以下為近端 input() 與 for 迴圈應用的程式碼, 若要將程式送到 OpenShift 執行, 除了採用 CherryPy 網際框架外, 還要轉為 html 列印
-# 利用 input() 取得的資料型別為字串
-toprint = input("要印甚麼內容?")
-# 若要將 input() 取得的字串轉為整數使用, 必須利用 int() 轉換
-repeat_no = int(input("重複列印幾次?"))
-for i in range(repeat_no):
-    print(toprint)
-'''
+
 </t>
 <t tx="2014fall.20141212095015.1777">################# (3) 程式類別定義區
 # 以下改用 CherryPy 網際框架程式架構
@@ -1842,6 +1840,36 @@ class Spur(object):
 # 有 self 的方法為類別中的成員方法, Python 程式透過此一 self 在各成員方法間傳遞物件內容
 def index(self):
     return "Github 2015cd_midterm 已經與 OpenShift 網站同步!"
+</t>
+<t tx="amd.20150503180635.1">第1時間因為將 gear.py 移到 ref 目錄下, 但是沒有處理 wsgi.py 內部的 import gear
+
+因此同步到 OpenShift 應用程式時, 因為產生錯誤而無法執行.
+
+處理方法, 使用 filezilla 與 Windows 環境下 pageant.exe 所導入的 OpenShift/.ssh/id_rsa 對應私鑰
+
+或者在 Linux 環境下, 利用指令 ssh-add ~/.ssh/id_rsa 達到與 pageant.exe 導入私鑰相同效果</t>
+<t tx="amd.20150503182305.1">利用 filezilla 與 pageant.exe 權限對應後, 可以從 OpenShift 應用程式的 /var/lib/openshift/5545eff4e0b8cd7279000242/app-root/logs 目錄中, 找到 python.log, 下載後, 可以見到下列錯誤, 只要刪除 import gear, 應該就可以執行.
+
+
+[Sun May 03 06:10:22 2015] [error] [client 127.8.21.129]     import gear
+[Sun May 03 06:10:22 2015] [error] [client 127.8.21.129] ImportError: No module named 'gear'</t>
+<t tx="amd.20150503182609.1">def __init__(self):
+    # hope to create downloads and images directories　
+    if not os.path.isdir(download_root_dir+"downloads"):
+        try:
+            os.makedirs(download_root_dir+"downloads")
+        except:
+            print("mkdir error")
+    if not os.path.isdir(download_root_dir+"images"):
+        try:
+            os.makedirs(download_root_dir+"images")
+        except:
+            print("mkdir error")
+    if not os.path.isdir(download_root_dir+"tmp"):
+        try:
+            os.makedirs(download_root_dir+"tmp")
+        except:
+            print("mkdir error")
 </t>
 </tnodes>
 </leo_file>
