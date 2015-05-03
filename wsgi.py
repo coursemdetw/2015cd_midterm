@@ -81,3 +81,4 @@ if 'OPENSHIFT_REPO_DIR' in os.environ.keys():
 else:
     # 表示在近端執行
     cherrypy.quickstart(root, config=application_conf)
+
