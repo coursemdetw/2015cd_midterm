@@ -11,6 +11,8 @@ import cherrypy
 import os
 # 導入 random 模組
 import random
+import math
+from cherrypy.lib.static import serve_file
 # 導入 gear 模組
 #import gear
 
@@ -28,6 +30,39 @@ else:
     data_dir = _curdir + "/local_data/"
 
 
+def downloadlist_access_list(files, starti, endi):
+    # different extension files, associated links were provided
+    # popup window to view images, video or STL files, other files can be downloaded directly
+    # files are all the data to list, from starti to endi
+    # add file size
+    outstring = ""
+    for index in range(int(starti)-1, int(endi)):
+        fileName, fileExtension = os.path.splitext(files[index])
+        fileExtension = fileExtension.lower()
+        fileSize = sizeof_fmt(os.path.getsize(download_root_dir+"downloads/"+files[index]))
+        # images files
+        if fileExtension == ".png" or fileExtension == ".jpg" or fileExtension == ".gif":
+            outstring += '<input type="checkbox" name="filename" value="'+files[index]+'"><a href="javascript:;" onClick="window.open(\'/downloads/'+ \
+            files[index]+'\',\'images\', \'catalogmode\',\'scrollbars\')">'+files[index]+'</a> ('+str(fileSize)+')<br />'
+        # stl files
+        elif fileExtension == ".stl":
+            outstring += '<input type="checkbox" name="filename" value="'+files[index]+'"><a href="javascript:;" onClick="window.open(\'/static/viewstl.html?src=/downloads/'+ \
+            files[index]+'\',\'images\', \'catalogmode\',\'scrollbars\')">'+files[index]+'</a> ('+str(fileSize)+')<br />'
+        # flv files
+        elif fileExtension == ".flv":
+            outstring += '<input type="checkbox" name="filename" value="'+files[index]+'"><a href="javascript:;" onClick="window.open(\'/flvplayer?filepath=/downloads/'+ \
+            files[index]+'\',\'images\', \'catalogmode\',\'scrollbars\')">'+files[index]+'</a> ('+str(fileSize)+')<br />'
+        # direct download files
+        else:
+            outstring += "<input type='checkbox' name='filename' value='"+files[index]+"'><a href='/download/?filepath="+download_root_dir.replace('\\', '/')+ \
+            "downloads/"+files[index]+"'>"+files[index]+"</a> ("+str(fileSize)+")<br />"
+    return outstring
+def sizeof_fmt(num):
+    for x in ['bytes','KB','MB','GB']:
+        if num < 1024.0:
+            return "%3.1f%s" % (num, x)
+        num /= 1024.0
+    return "%3.1f%s" % (num, 'TB')
 ################# (3) 程式類別定義區
 # 以下改用 CherryPy 網際框架程式架構
 # 以下為 Hello 類別的設計內容, 其中的 object 使用, 表示 Hello 類別繼承 object 的所有特性, 包括方法與屬性設計
@@ -76,6 +111,8 @@ class Midterm(object):
         <body>
         <a href="spur">spur</a><br />
         <a href="drawspur">drawspur</a><br />
+        <a href="fileuploadform">上傳檔案</a><br />
+        <a href="download_list">列出上傳檔案</a><br />
         </body>
         </html>
         '''
@@ -322,6 +359,125 @@ class Midterm(object):
     '''
 
         return outstring
+    @cherrypy.expose
+    def fileuploadform(self):
+        return '''<h1>file upload</h1>
+    <script src="/static/jquery.js" type="text/javascript"></script>
+    <script src="/static/axuploader.js" type="text/javascript"></script>
+    <script>
+    $(document).ready(function(){
+    $('.prova').axuploader({url:'fileaxupload', allowExt:['jpg','png','gif','7z','pdf','zip','flv','stl','swf'],
+    finish:function(x,files)
+        {
+            alert('All files have been uploaded: '+files);
+        },
+    enable:true,
+    remotePath:function(){
+    return 'downloads/';
+    }
+    });
+    });
+    </script>
+    <div class="prova"></div>
+    <input type="button" onclick="$('.prova').axuploader('disable')" value="asd" />
+    <input type="button" onclick="$('.prova').axuploader('enable')" value="ok" />
+    </section></body></html>
+    '''
+    @cherrypy.expose
+    def fileaxupload(self, *args, **kwargs):
+        filename = kwargs["ax-file-name"]
+        flag = kwargs["start"]
+        if flag == "0":
+            file = open(download_root_dir+"downloads/"+filename, "wb")
+        else:
+            file = open(download_root_dir+"downloads/"+filename, "ab")
+        file.write(cherrypy.request.body.read())
+        file.close()
+        return "files uploaded!"
+    @cherrypy.expose
+    def download_list(self, item_per_page=5, page=1, keyword=None, *args, **kwargs):
+        files = os.listdir(download_root_dir+"downloads/")
+        total_rows = len(files)
+        totalpage = math.ceil(total_rows/int(item_per_page))
+        starti = int(item_per_page) * (int(page) - 1) + 1
+        endi = starti + int(item_per_page) - 1
+        outstring = "<form method='post' action='delete_file'>"
+        notlast = False
+        if total_rows > 0:
+            outstring += "<br />"
+            if (int(page) * int(item_per_page)) < total_rows:
+                notlast = True
+            if int(page) > 1:
+                outstring += "<a href='"
+                outstring += "download_list?&amp;page=1&amp;item_per_page="+str(item_per_page)+"&amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                outstring += "'><<</a> "
+                page_num = int(page) - 1
+                outstring += "<a href='"
+                outstring += "download_list?&amp;page="+str(page_num)+"&amp;item_per_page="+str(item_per_page)+"&amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                outstring += "'>Previous</a> "
+            span = 10
+            for index in range(int(page)-span, int(page)+span):
+                if index>= 0 and index< totalpage:
+                    page_now = index + 1 
+                    if page_now == int(page):
+                        outstring += "<font size='+1' color='red'>"+str(page)+" </font>"
+                    else:
+                        outstring += "<a href='"
+                        outstring += "download_list?&amp;page="+str(page_now)+"&amp;item_per_page="+str(item_per_page)+"&amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                        outstring += "'>"+str(page_now)+"</a> "
+
+            if notlast == True:
+                nextpage = int(page) + 1
+                outstring += " <a href='"
+                outstring += "download_list?&amp;page="+str(nextpage)+"&amp;item_per_page="+str(item_per_page)+"&amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                outstring += "'>Next</a>"
+                outstring += " <a href='"
+                outstring += "download_list?&amp;page="+str(totalpage)+"&amp;item_per_page="+str(item_per_page)+"&amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                outstring += "'>>></a><br /><br />"
+            if (int(page) * int(item_per_page)) < total_rows:
+                notlast = True
+                outstring += downloadlist_access_list(files, starti, endi)+"<br />"
+            else:
+                outstring += "<br /><br />"
+                outstring += downloadlist_access_list(files, starti, total_rows)+"<br />"
+            
+            if int(page) > 1:
+                outstring += "<a href='"
+                outstring += "download_list?&amp;page=1&amp;item_per_page="+str(item_per_page)+"&amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                outstring += "'><<</a> "
+                page_num = int(page) - 1
+                outstring += "<a href='"
+                outstring += "download_list?&amp;page="+str(page_num)+"&amp;item_per_page="+str(item_per_page)+"&amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                outstring += "'>Previous</a> "
+            span = 10
+            for index in range(int(page)-span, int(page)+span):
+            #for ($j=$page-$range;$j<$page+$range;$j++)
+                if index >=0 and index < totalpage:
+                    page_now = index + 1
+                    if page_now == int(page):
+                        outstring += "<font size='+1' color='red'>"+str(page)+" </font>"
+                    else:
+                        outstring += "<a href='"
+                        outstring += "download_list?&amp;page="+str(page_now)+"&amp;item_per_page="+str(item_per_page)+"&amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                        outstring += "'>"+str(page_now)+"</a> "
+            if notlast == True:
+                nextpage = int(page) + 1
+                outstring += " <a href='"
+                outstring += "download_list?&amp;page="+str(nextpage)+"&amp;item_per_page="+str(item_per_page)+"&amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                outstring += "'>Next</a>"
+                outstring += " <a href='"
+                outstring += "download_list?&amp;page="+str(totalpage)+"&amp;item_per_page="+str(item_per_page)+"&amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                outstring += "'>>></a>"
+        else:
+            outstring += "no data!"
+        outstring += "<br /><br /><input type='submit' value='delete'><input type='reset' value='reset'></form>"
+
+        return "<div class='container'><nav>"+ \
+            "</nav><section><h1>Download List</h1>"+outstring+"<br/><br /></body></html>"
+class Download:
+    @cherrypy.expose
+    def index(self, filepath):
+        return serve_file(filepath, "application/x-download", "attachment")
 ################# (4) 程式啟動區
 # 配合程式檔案所在目錄設定靜態目錄或靜態檔案
 application_conf = {'/static':{
@@ -337,6 +493,7 @@ application_conf = {'/static':{
     }
     
 root = Midterm()
+root.download = Download()
 #root.gear = gear.Gear()
 
 if 'OPENSHIFT_REPO_DIR' in os.environ.keys():

@@ -29,6 +29,8 @@
 <v t="2014fall.20141212095015.1774" a="E"><vh>@path ./</vh>
 <v t="2014fall.20141212095015.1775" a="E"><vh>@clean wsgi.py</vh>
 <v t="2014fall.20141212095015.1776"><vh>&lt;&lt;declarations&gt;&gt; (wsgi)</vh></v>
+<v t="office.20150504185643.1"><vh>downloadlist_access_list</vh></v>
+<v t="office.20150504185717.1"><vh>sizeof_fmt</vh></v>
 <v t="2014fall.20141212095015.1777" a="E"><vh>class Midterm</vh>
 <v t="amd.20150503182609.1"><vh>__init__</vh></v>
 <v t="amd.20150503173602.1"><vh>index</vh></v>
@@ -38,9 +40,16 @@
 <v t="amd.20150503185210.1"><vh>drawspuraction</vh></v>
 <v t="office.20150504093049.1"><vh>cube</vh></v>
 <v t="office.20150504093053.1"><vh>cubeaction</vh></v>
+<v t="office.20150504183254.1"><vh>fileuploadform</vh></v>
+<v t="office.20150504183312.1"><vh>fileaxupload</vh></v>
+<v t="office.20150504185417.1"><vh>download_list</vh></v>
+</v>
+<v t="office.20150504190303.1"><vh>class Download</vh>
+<v t="office.20150504190303.2"><vh>index</vh></v>
 </v>
 </v>
 <v t="office.20150504100507.1" a="E"><vh>@path static</vh>
+<v t="office.20150504184156.1"><vh>@edit axuploader.js</vh></v>
 <v t="office.20150504100857.1" a="E"><vh>@path weblink</vh>
 <v t="office.20150504100907.1"><vh>@edit pfcUtils.js</vh></v>
 <v t="office.20150504101740.1"><vh>@edit wl_header.js</vh></v>
@@ -121,6 +130,7 @@ application_conf = {'/static':{
     }
     
 root = Midterm()
+root.download = Download()
 #root.gear = gear.Gear()
 
 if 'OPENSHIFT_REPO_DIR' in os.environ.keys():
@@ -135,6 +145,8 @@ else:
 import os
 # 導入 random 模組
 import random
+import math
+from cherrypy.lib.static import serve_file
 # 導入 gear 模組
 #import gear
 
@@ -1749,6 +1761,8 @@ def index(self):
     &lt;body&gt;
     &lt;a href="spur"&gt;spur&lt;/a&gt;&lt;br /&gt;
     &lt;a href="drawspur"&gt;drawspur&lt;/a&gt;&lt;br /&gt;
+    &lt;a href="fileuploadform"&gt;上傳檔案&lt;/a&gt;&lt;br /&gt;
+    &lt;a href="download_list"&gt;列出上傳檔案&lt;/a&gt;&lt;br /&gt;
     &lt;/body&gt;
     &lt;/html&gt;
     '''
@@ -2071,5 +2085,164 @@ JScript Language Reference: https://msdn.microsoft.com/en-us/library/yek4tbz0(v=
 <t tx="office.20150504111057.1">Brython 3.1.1 已經在 IE 9 之後的版本取得相容, 但是當 IE 9 嵌入 Creo Parametric 時, 則無法正確導入 brython.js, 其中對於 Brython 所定義給 Python 程式使用的 get_class 方法一直無法導入 __class__ 物件而出現錯誤.
 
 由於在 Creo Parametric 環境中使用 Brython 的用戶目前應該是絕無僅有, 因此在這個階段, 除了自行修改 brython.js 讓 Brython 可以在嵌入式 IE 執行 Pro/Web.Link, 唯一的方法就是採用 JavaScript 編寫 Pro/Web.Link 程式</t>
+<t tx="office.20150504183254.1">@cherrypy.expose
+def fileuploadform(self):
+    return '''&lt;h1&gt;file upload&lt;/h1&gt;
+&lt;script src="/static/jquery.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="/static/axuploader.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script&gt;
+$(document).ready(function(){
+$('.prova').axuploader({url:'fileaxupload', allowExt:['jpg','png','gif','7z','pdf','zip','flv','stl','swf'],
+finish:function(x,files)
+    {
+        alert('All files have been uploaded: '+files);
+    },
+enable:true,
+remotePath:function(){
+return 'downloads/';
+}
+});
+});
+&lt;/script&gt;
+&lt;div class="prova"&gt;&lt;/div&gt;
+&lt;input type="button" onclick="$('.prova').axuploader('disable')" value="asd" /&gt;
+&lt;input type="button" onclick="$('.prova').axuploader('enable')" value="ok" /&gt;
+&lt;/section&gt;&lt;/body&gt;&lt;/html&gt;
+'''</t>
+<t tx="office.20150504183312.1">@cherrypy.expose
+def fileaxupload(self, *args, **kwargs):
+    filename = kwargs["ax-file-name"]
+    flag = kwargs["start"]
+    if flag == "0":
+        file = open(download_root_dir+"downloads/"+filename, "wb")
+    else:
+        file = open(download_root_dir+"downloads/"+filename, "ab")
+    file.write(cherrypy.request.body.read())
+    file.close()
+    return "files uploaded!"
+</t>
+<t tx="office.20150504185417.1">@cherrypy.expose
+def download_list(self, item_per_page=5, page=1, keyword=None, *args, **kwargs):
+    files = os.listdir(download_root_dir+"downloads/")
+    total_rows = len(files)
+    totalpage = math.ceil(total_rows/int(item_per_page))
+    starti = int(item_per_page) * (int(page) - 1) + 1
+    endi = starti + int(item_per_page) - 1
+    outstring = "&lt;form method='post' action='delete_file'&gt;"
+    notlast = False
+    if total_rows &gt; 0:
+        outstring += "&lt;br /&gt;"
+        if (int(page) * int(item_per_page)) &lt; total_rows:
+            notlast = True
+        if int(page) &gt; 1:
+            outstring += "&lt;a href='"
+            outstring += "download_list?&amp;amp;page=1&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;&lt;&lt;&lt;/a&gt; "
+            page_num = int(page) - 1
+            outstring += "&lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(page_num)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;Previous&lt;/a&gt; "
+        span = 10
+        for index in range(int(page)-span, int(page)+span):
+            if index&gt;= 0 and index&lt; totalpage:
+                page_now = index + 1 
+                if page_now == int(page):
+                    outstring += "&lt;font size='+1' color='red'&gt;"+str(page)+" &lt;/font&gt;"
+                else:
+                    outstring += "&lt;a href='"
+                    outstring += "download_list?&amp;amp;page="+str(page_now)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                    outstring += "'&gt;"+str(page_now)+"&lt;/a&gt; "
+
+        if notlast == True:
+            nextpage = int(page) + 1
+            outstring += " &lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(nextpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;Next&lt;/a&gt;"
+            outstring += " &lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(totalpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;&gt;&gt;&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;"
+        if (int(page) * int(item_per_page)) &lt; total_rows:
+            notlast = True
+            outstring += downloadlist_access_list(files, starti, endi)+"&lt;br /&gt;"
+        else:
+            outstring += "&lt;br /&gt;&lt;br /&gt;"
+            outstring += downloadlist_access_list(files, starti, total_rows)+"&lt;br /&gt;"
+        
+        if int(page) &gt; 1:
+            outstring += "&lt;a href='"
+            outstring += "download_list?&amp;amp;page=1&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;&lt;&lt;&lt;/a&gt; "
+            page_num = int(page) - 1
+            outstring += "&lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(page_num)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;Previous&lt;/a&gt; "
+        span = 10
+        for index in range(int(page)-span, int(page)+span):
+        #for ($j=$page-$range;$j&lt;$page+$range;$j++)
+            if index &gt;=0 and index &lt; totalpage:
+                page_now = index + 1
+                if page_now == int(page):
+                    outstring += "&lt;font size='+1' color='red'&gt;"+str(page)+" &lt;/font&gt;"
+                else:
+                    outstring += "&lt;a href='"
+                    outstring += "download_list?&amp;amp;page="+str(page_now)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                    outstring += "'&gt;"+str(page_now)+"&lt;/a&gt; "
+        if notlast == True:
+            nextpage = int(page) + 1
+            outstring += " &lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(nextpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;Next&lt;/a&gt;"
+            outstring += " &lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(totalpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;&gt;&gt;&lt;/a&gt;"
+    else:
+        outstring += "no data!"
+    outstring += "&lt;br /&gt;&lt;br /&gt;&lt;input type='submit' value='delete'&gt;&lt;input type='reset' value='reset'&gt;&lt;/form&gt;"
+
+    return "&lt;div class='container'&gt;&lt;nav&gt;"+ \
+        "&lt;/nav&gt;&lt;section&gt;&lt;h1&gt;Download List&lt;/h1&gt;"+outstring+"&lt;br/&gt;&lt;br /&gt;&lt;/body&gt;&lt;/html&gt;"
+</t>
+<t tx="office.20150504185643.1">def downloadlist_access_list(files, starti, endi):
+    # different extension files, associated links were provided
+    # popup window to view images, video or STL files, other files can be downloaded directly
+    # files are all the data to list, from starti to endi
+    # add file size
+    outstring = ""
+    for index in range(int(starti)-1, int(endi)):
+        fileName, fileExtension = os.path.splitext(files[index])
+        fileExtension = fileExtension.lower()
+        fileSize = sizeof_fmt(os.path.getsize(download_root_dir+"downloads/"+files[index]))
+        # images files
+        if fileExtension == ".png" or fileExtension == ".jpg" or fileExtension == ".gif":
+            outstring += '&lt;input type="checkbox" name="filename" value="'+files[index]+'"&gt;&lt;a href="javascript:;" onClick="window.open(\'/downloads/'+ \
+            files[index]+'\',\'images\', \'catalogmode\',\'scrollbars\')"&gt;'+files[index]+'&lt;/a&gt; ('+str(fileSize)+')&lt;br /&gt;'
+        # stl files
+        elif fileExtension == ".stl":
+            outstring += '&lt;input type="checkbox" name="filename" value="'+files[index]+'"&gt;&lt;a href="javascript:;" onClick="window.open(\'/static/viewstl.html?src=/downloads/'+ \
+            files[index]+'\',\'images\', \'catalogmode\',\'scrollbars\')"&gt;'+files[index]+'&lt;/a&gt; ('+str(fileSize)+')&lt;br /&gt;'
+        # flv files
+        elif fileExtension == ".flv":
+            outstring += '&lt;input type="checkbox" name="filename" value="'+files[index]+'"&gt;&lt;a href="javascript:;" onClick="window.open(\'/flvplayer?filepath=/downloads/'+ \
+            files[index]+'\',\'images\', \'catalogmode\',\'scrollbars\')"&gt;'+files[index]+'&lt;/a&gt; ('+str(fileSize)+')&lt;br /&gt;'
+        # direct download files
+        else:
+            outstring += "&lt;input type='checkbox' name='filename' value='"+files[index]+"'&gt;&lt;a href='/download/?filepath="+download_root_dir.replace('\\', '/')+ \
+            "downloads/"+files[index]+"'&gt;"+files[index]+"&lt;/a&gt; ("+str(fileSize)+")&lt;br /&gt;"
+    return outstring
+</t>
+<t tx="office.20150504185717.1">def sizeof_fmt(num):
+    for x in ['bytes','KB','MB','GB']:
+        if num &lt; 1024.0:
+            return "%3.1f%s" % (num, x)
+        num /= 1024.0
+    return "%3.1f%s" % (num, 'TB')
+</t>
+<t tx="office.20150504190303.1">class Download:
+    @others
+</t>
+<t tx="office.20150504190303.2">@cherrypy.expose
+def index(self, filepath):
+    return serve_file(filepath, "application/x-download", "attachment")
+</t>
 </tnodes>
 </leo_file>
