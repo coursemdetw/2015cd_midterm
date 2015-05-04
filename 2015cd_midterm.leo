@@ -15,10 +15,15 @@
 <v t="2014fall.20141212095015.1786"><vh>@string initial_split_orientation = horizontal</vh></v>
 </v>
 <v t="2015.20150330144929.1714" a="E"><vh>以下為協同產品設計實習期中考試</vh>
-<v t="amd.20150503180635.1" a="E"><vh>與 OpenShift 應用程式同步</vh>
+<v t="amd.20150503180635.1"><vh>與 OpenShift 應用程式同步</vh>
 <v t="amd.20150503182305.1"><vh>錯誤訊息</vh></v>
 <v t="amd.20150503182956.1"><vh>已經完成 Github 倉儲與 OpenShift 同步</vh></v>
 <v t="amd.20150503183108.1"><vh>傳回學號</vh></v>
+</v>
+<v t="office.20150504101130.1" a="E"><vh>在 Creo Pro/Web.Link 環境使用 Brython</vh>
+<v t="office.20150504101152.1"><vh>好處</vh></v>
+<v t="office.20150504101237.1"><vh>問題</vh></v>
+<v t="office.20150504111057.1"><vh>結論</vh></v>
 </v>
 </v>
 <v t="2014fall.20141212095015.1774" a="E"><vh>@path ./</vh>
@@ -31,14 +36,25 @@
 <v t="amd.20150503183546.1"><vh>spuraction</vh></v>
 <v t="amd.20150503185058.1"><vh>drawspur</vh></v>
 <v t="amd.20150503185210.1"><vh>drawspuraction</vh></v>
+<v t="office.20150504093049.1"><vh>cube</vh></v>
+<v t="office.20150504093053.1"><vh>cubeaction</vh></v>
 </v>
 </v>
-<v t="amd.20150503185513.1" a="E"><vh>@path static/Brython3.1.1-20150328-091302/Lib/site-packages/</vh>
+<v t="office.20150504100507.1" a="E"><vh>@path static</vh>
+<v t="office.20150504100857.1" a="E"><vh>@path weblink</vh>
+<v t="office.20150504100907.1"><vh>@edit pfcUtils.js</vh></v>
+<v t="office.20150504101740.1"><vh>@edit wl_header.js</vh></v>
+</v>
+<v t="office.20150504100745.1" a="E"><vh>@path Brython3.1.1-20150328-091302</vh>
+<v t="office.20150504100543.1"><vh>@edit brython.js</vh></v>
+<v t="amd.20150503185513.1" a="E"><vh>@path Lib/site-packages/</vh>
 <v t="amd.20150503185513.2"><vh>@edit spur.py</vh></v>
+</v>
+</v>
 </v>
 <v t="2014fall.20141212095015.1780"><vh>@edit setup.py</vh></v>
 </v>
-<v t="amd.20150503172957.1" a="E"><vh>以下為參考檔案</vh>
+<v t="amd.20150503172957.1"><vh>以下為參考檔案</vh>
 <v t="amd.20150503173029.1" a="E"><vh>@path ref</vh>
 <v t="amd.20150503173008.1" a="E"><vh>@clean wsgi.py</vh>
 <v t="amd.20150503173008.2"><vh>&lt;&lt;declarations&gt;&gt; (wsgi)</vh></v>
@@ -1719,130 +1735,6 @@ if (!newfile.Status) {
     return outstring
 </t>
 <t tx="amd.20150503173429.1"></t>
-<t tx="amd.20150503173429.2">@language python
-#coding: utf-8
-import math
-# 導入數學函式後, 圓周率為 pi
-# deg 為角度轉為徑度的轉換因子
-deg = math.pi/180.
-class Spur(object):
-    def __init__(self, ctx):
-        self.ctx = ctx
-
-    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
-        self.ctx.beginPath()
-        self.ctx.lineWidth = width
-        self.ctx.moveTo(x1, y1)
-        self.ctx.lineTo(x2, y2)
-        self.ctx.strokeStyle = fill
-        self.ctx.stroke()
-    #
-    # 以下分別為正齒輪繪圖與主 tkinter 畫布繪圖
-    #
-    # 定義一個繪正齒輪的繪圖函式
-    # midx 為齒輪圓心 x 座標
-    # midy 為齒輪圓心 y 座標
-    # rp 為節圓半徑, n 為齒數
-    # pa 為壓力角 (deg)
-    # rot 為旋轉角 (deg)
-    # 注意 n 為 52 齒時繪圖產生錯誤, 因為 base circle 與齒根圓大小未進行判斷, 必須要修正
-    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
-        # 齒輪漸開線分成 15 線段繪製
-        imax = 15
-        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
-        self.create_line(midx, midy, midx, midy-rp)
-        # 畫出 rp 圓, 畫圓函式尚未定義
-        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
-        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
-        # 模數也就是齒冠大小
-        a=2*rp/n
-        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
-        d=2.5*rp/n
-        # ra 為齒輪的外圍半徑
-        ra=rp+a
-        # 畫出 ra 圓, 畫圓函式尚未定義
-        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
-        # rb 則為齒輪的基圓半徑
-        # 基圓為漸開線長齒之基準圓
-        rb=rp*math.cos(pa*deg)
-        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
-        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
-        # rd 為齒根圓半徑
-        rd=rp-d
-        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
-        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
-        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
-        # 將圓弧分成 imax 段來繪製漸開線
-        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-        if rd&gt;rb:
-            dr = (ra-rd)/imax
-        else:
-            dr=(ra-rb)/imax
-        # tan(pa*deg)-pa*deg 為漸開線函數
-        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
-        for j in range(n):
-            ang=-2.*j*math.pi/n+sigma
-            ang2=2.*j*math.pi/n+sigma
-            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
-            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
-            for i in range(imax+1):
-                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-                if rd&gt;rb:
-                    r=rd+i*dr
-                else:
-                    r=rb+i*dr
-                theta=math.sqrt((r*r)/(rb*rb)-1.)
-                alpha=theta-math.atan(theta)
-                xpt=r*math.sin(alpha-ang)
-                ypt=r*math.cos(alpha-ang)
-                xd=rd*math.sin(-ang)
-                yd=rd*math.cos(-ang)
-                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
-                if(i==0):
-                    last_x = midx+xd
-                    last_y = midy-yd
-                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
-                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
-                # 最後一點, 則為齒頂圓
-                if(i==imax):
-                    lfx=midx+xpt
-                    lfy=midy-ypt
-                last_x = midx+xpt
-                last_y = midy-ypt
-            # the line from last end of dedendum point to the recent
-            # end of dedendum point
-            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
-            # 下列為齒根圓上用來近似圓弧的直線
-            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
-            for i in range(imax+1):
-                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-                if rd&gt;rb:
-                    r=rd+i*dr
-                else:
-                    r=rb+i*dr
-                theta=math.sqrt((r*r)/(rb*rb)-1.)
-                alpha=theta-math.atan(theta)
-                xpt=r*math.sin(ang2-alpha)
-                ypt=r*math.cos(ang2-alpha)
-                xd=rd*math.sin(ang2)
-                yd=rd*math.cos(ang2)
-                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
-                if(i==0):
-                    last_x = midx+xd
-                    last_y = midy-yd
-                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
-                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
-                # 最後一點, 則為齒頂圓
-                if(i==imax):
-                    rfx=midx+xpt
-                    rfy=midy-ypt
-                last_x = midx+xpt
-                last_y = midy-ypt
-            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
-            # 下列為齒頂圓上用來近似圓弧的直線
-            self.create_line(lfx,lfy,rfx,rfy,fill=color)
-</t>
 <t tx="amd.20150503173602.1"># 以 @ 開頭的 cherrypy.expose 為 decorator, 用來表示隨後的成員方法, 可以直接讓使用者以 URL 連結執行
 @cherrypy.expose
 # index 方法為 CherryPy 各類別成員方法中的內建(default)方法, 當使用者執行時未指定方法, 系統將會優先執行 index 方法
@@ -1958,11 +1850,8 @@ def drawspur(self, N=20, M=5, P=15):
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
-&lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
 &lt;/head&gt;
-&lt;!-- 啟動 brython() --&gt;
-&lt;body onload="brython()"&gt;
+&lt;body&gt;
     
 &lt;form method=POST action=drawspuraction&gt;
 齒數:&lt;input type=text name=N value='''+str(N)+'''&gt;&lt;br /&gt;
@@ -1971,6 +1860,13 @@ def drawspur(self, N=20, M=5, P=15):
 &lt;input type=submit value=畫出正齒輪輪廓&gt;
 &lt;/form&gt;
 &lt;br /&gt;&lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
+&lt;!-- 載入 brython.js --&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+window.onload=function(){
+brython();
+}
+&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 '''
@@ -1984,11 +1880,8 @@ def drawspuraction(self, N=20, M=5, P=15):
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
-&lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
 &lt;/head&gt;
-&lt;!-- 啟動 brython() --&gt;
-&lt;body onload="brython()"&gt;
+&lt;body&gt;
 &lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
     
 &lt;!-- 以下為 canvas 畫圖程式 --&gt;
@@ -2017,11 +1910,166 @@ spur.Spur(ctx).Gear(600, 600, rp, N, P, "blue")
 
 &lt;/script&gt;
 &lt;canvas id="plotarea" width="1200" height="1200"&gt;&lt;/canvas&gt;
+&lt;!-- 載入 brython.js --&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+window.onload=function(){
+brython();
+}
+&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 '''
 
     return outstring</t>
 <t tx="amd.20150503185513.1"></t>
+<t tx="office.20150504093049.1">@cherrypy.expose
+# W 為正方體的邊長
+def cube(self, W=10):
+    outstring = '''
+&lt;!DOCTYPE html&gt; 
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;!-- 使用者輸入表單的參數交由 cubeaction 方法處理 --&gt;
+&lt;form method=POST action=cubeaction&gt;
+正方體邊長:&lt;input type=text name=W value='''+str(W)+'''&gt;&lt;br /&gt;
+&lt;input type=submit value=送出&gt;
+&lt;/form&gt;
+&lt;br /&gt;&lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+'''
+
+    return outstring</t>
+<t tx="office.20150504093053.1">@cherrypy.expose
+# W 為正方體邊長, 內定值為 10
+def cubeaction(self, W=10):
+    outstring = '''
+&lt;!DOCTYPE html&gt; 
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
+&lt;!-- 先載入 pfcUtils.js 與 wl_header.js --&gt;
+&lt;script type="text/javascript" src="/static/weblink/pfcUtils.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/weblink/wl_header.js"&gt;
+&lt;!-- 載入 brython.js --&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+document.writeln ("Error loading Pro/Web.Link header!");
+&lt;/script&gt;
+&lt;script&gt;
+window.onload=function(){
+brython();
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;!-- 不要使用 body 啟動 brython() 改為 window level 啟動 --&gt;
+&lt;body onload=""&gt;
+&lt;h1&gt;Creo 參數化零件&lt;/h1&gt;
+&lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
+
+&lt;!-- 以下為 Creo Pro/Web.Link 程式, 將 JavaScrip 改為 Brython 程式 --&gt;
+
+&lt;script type="text/python"&gt;
+from browser import document, window
+from math import *
+
+# 這個區域為 Brython 程式範圍, 註解必須採用 Python 格式
+# 因為 pfcIsWindows() 為原生的 JavaScript 函式, 在 Brython 中引用必須透過 window 物件
+if (!window.pfcIsWindows()) window.netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+# 若第三輸入為 false, 表示僅載入 session, 但是不顯示
+# ret 為 model open return
+ret = document.pwl.pwlMdlOpen("cube.prt", "v:/tmp", false)
+if (!ret.Status):
+    window.alert("pwlMdlOpen failed (" + ret.ErrorCode + ")")
+    # 將 ProE 執行階段設為變數 session
+    session = window.pfcGetProESession()
+    # 在視窗中打開零件檔案, 並且顯示出來
+    pro_window = session.OpenFile(pfcCreate("pfcModelDescriptor").CreateFromFileName("cube.prt"))
+    solid = session.GetModel("cube.prt", window.pfcCreate("pfcModelType").MDL_PART)
+    # 在 Brython 中與 Python 語法相同, 只有初值設定問題, 無需宣告變數
+    # length, width, myf, myn, i, j, volume, count, d1Value, d2Value
+    # 將模型檔中的 length 變數設為 javascript 中的 length 變數
+    length = solid.GetParam("a1")
+    # 將模型檔中的 width 變數設為 javascript 中的 width 變數
+    width = solid.GetParam("a2")
+    # 改變零件尺寸
+    # myf=20
+    # myn=20
+    volume = 0
+    count = 0
+    try:
+        # 以下採用 URL 輸入對應變數
+        # createParametersFromArguments ();
+        # 以下則直接利用 javascript 程式改變零件參數
+        for i in range(5):
+            myf ='''+str(W)+'''
+            myn ='''+str(W)+''' + i*2.0
+            # 設定變數值, 利用 ModelItem 中的 CreateDoubleParamValue 轉換成 Pro/Web.Link 所需要的浮點數值
+            d1Value = window.pfcCreate ("MpfcModelItem").CreateDoubleParamValue(myf)
+            d2Value = window.pfcCreate ("MpfcModelItem").CreateDoubleParamValue(myn)
+            # 將處理好的變數值, 指定給對應的零件變數
+            length.Value = d1Value
+            width.Value = d2Value
+            # 零件尺寸重新設定後, 呼叫 Regenerate 更新模型
+            # 在 JavaScript 為 null 在 Brython 為 None
+            solid.Regenerate(None)
+            # 利用 GetMassProperty 取得模型的質量相關物件
+            properties = solid.GetMassProperty(None)
+            # volume = volume + properties.Volume
+            volume = properties.Volume
+            count = count + 1
+            window.alert("執行第"+count+"次,零件總體積:"+volume)
+            # 將零件存為新檔案
+            newfile = document.pwl.pwlMdlSaveAs("cube.prt", "v:/tmp", "cube"+count+".prt")
+            if (!newfile.Status):
+                window.alert("pwlMdlSaveAs failed (" + newfile.ErrorCode + ")")
+            # window.alert("共執行:"+count+"次,零件總體積:"+volume)
+            # window.alert("零件體積:"+properties.Volume)
+            # window.alert("零件體積取整數:"+Math.round(properties.Volume));
+    except:
+        window.alert ("Exception occurred: "+window.pfcGetExceptionType (err))
+&lt;/script&gt;
+'''
+
+    return outstring</t>
+<t tx="office.20150504100507.1"></t>
+<t tx="office.20150504100745.1"></t>
+<t tx="office.20150504100857.1"></t>
+<t tx="office.20150504101130.1"></t>
+<t tx="office.20150504101152.1">可以在網頁前端透過 Brython 程式控制 Creo Parametric 環境中的機械設計零件</t>
+<t tx="office.20150504101237.1">Brython 3.1.1 雖然可以在 IE 9 以上的瀏覽器中運行, 但是與 Creo Parametric 環境中的嵌入式  ActiveX 物件合用時,
+
+產生無法載入 __class__ 的問題
+
+解決方法:
+
+必須深入檢視 brython.js 與 Pro/Web.Link ActiveX 物件導入時, 為何無法載入  __class__
+
+1. 將  brython.js 載入方式從 body 轉為 window 載入, 也是得到同樣的錯誤
+
+2. 已經發現錯誤出現在 brython.js 中的 5003-5005 行
+
+$B.get_class=function(obj){
+if(obj===null){return $B.$NoneDict}
+var klass=obj.__class__
+
+因為將 IE 嵌入 Creo Parametric 後, 有關 JScript 的語法與外部的 IE 有些差異, 因此若要在 Creo Parametric 環境中的 IE 執行 Brython, 需要從了解 
+ JavaScript 程式在 IE 上的差異入手:
+ 
+ IE Embedded (Compact 7): https://msdn.microsoft.com/en-us/library/ee487632.aspx
+
+JScript User's Guide: https://msdn.microsoft.com/en-us/library/4yyeyb0a(v=vs.84).aspx
+
+JScript Language Reference: https://msdn.microsoft.com/en-us/library/yek4tbz0(v=vs.84).aspx
+
+
+
+</t>
+<t tx="office.20150504111057.1">Brython 3.1.1 已經在 IE 9 之後的版本取得相容, 但是當 IE 9 嵌入 Creo Parametric 時, 則無法正確導入 brython.js, 其中對於 Brython 所定義給 Python 程式使用的 get_class 方法一直無法導入 __class__ 物件而出現錯誤.
+
+由於在 Creo Parametric 環境中使用 Brython 的用戶目前應該是絕無僅有, 因此在這個階段, 除了自行修改 brython.js 讓 Brython 可以在嵌入式 IE 執行 Pro/Web.Link, 唯一的方法就是採用 JavaScript 編寫 Pro/Web.Link 程式</t>
 </tnodes>
 </leo_file>
