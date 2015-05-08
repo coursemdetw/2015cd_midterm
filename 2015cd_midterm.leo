@@ -15,15 +15,22 @@
 <v t="2014fall.20141212095015.1786"><vh>@string initial_split_orientation = horizontal</vh></v>
 </v>
 <v t="2015.20150330144929.1714" a="E"><vh>以下為協同產品設計實習期中考試</vh>
-<v t="amd.20150503180635.1" a="E"><vh>與 OpenShift 應用程式同步</vh>
+<v t="amd.20150503180635.1"><vh>與 OpenShift 應用程式同步</vh>
 <v t="amd.20150503182305.1"><vh>錯誤訊息</vh></v>
 <v t="amd.20150503182956.1"><vh>已經完成 Github 倉儲與 OpenShift 同步</vh></v>
 <v t="amd.20150503183108.1"><vh>傳回學號</vh></v>
+</v>
+<v t="office.20150504101130.1" a="E"><vh>在 Creo Pro/Web.Link 環境使用 Brython</vh>
+<v t="office.20150504101152.1"><vh>好處</vh></v>
+<v t="office.20150504101237.1"><vh>問題</vh></v>
+<v t="office.20150504111057.1"><vh>結論</vh></v>
 </v>
 </v>
 <v t="2014fall.20141212095015.1774" a="E"><vh>@path ./</vh>
 <v t="2014fall.20141212095015.1775" a="E"><vh>@clean wsgi.py</vh>
 <v t="2014fall.20141212095015.1776"><vh>&lt;&lt;declarations&gt;&gt; (wsgi)</vh></v>
+<v t="office.20150504185643.1"><vh>downloadlist_access_list</vh></v>
+<v t="office.20150504185717.1"><vh>sizeof_fmt</vh></v>
 <v t="2014fall.20141212095015.1777" a="E"><vh>class Midterm</vh>
 <v t="amd.20150503182609.1"><vh>__init__</vh></v>
 <v t="amd.20150503173602.1"><vh>index</vh></v>
@@ -31,15 +38,33 @@
 <v t="amd.20150503183546.1"><vh>spuraction</vh></v>
 <v t="amd.20150503185058.1"><vh>drawspur</vh></v>
 <v t="amd.20150503185210.1"><vh>drawspuraction</vh></v>
+<v t="office.20150504093049.1"><vh>cube</vh></v>
+<v t="office.20150504093053.1"><vh>cubeaction</vh></v>
+<v t="office.20150504183254.1"><vh>fileuploadform</vh></v>
+<v t="office.20150504183312.1"><vh>fileaxupload</vh></v>
+<v t="office.20150504185417.1"><vh>download_list</vh></v>
+</v>
+<v t="office.20150504190303.1"><vh>class Download</vh>
+<v t="office.20150504190303.2"><vh>index</vh></v>
 </v>
 </v>
-<v t="amd.20150503185513.1" a="E"><vh>@path static/Brython3.1.1-20150328-091302/Lib/site-packages/</vh>
+<v t="office.20150504100507.1" a="E"><vh>@path static</vh>
+<v t="office.20150504184156.1"><vh>@edit axuploader.js</vh></v>
+<v t="office.20150504100857.1" a="E"><vh>@path weblink</vh>
+<v t="office.20150504100907.1"><vh>@edit pfcUtils.js</vh></v>
+<v t="office.20150504101740.1"><vh>@edit wl_header.js</vh></v>
+</v>
+<v t="office.20150504100745.1" a="E"><vh>@path Brython3.1.1-20150328-091302</vh>
+<v t="office.20150504100543.1"><vh>@edit brython.js</vh></v>
+<v t="amd.20150503185513.1" a="E"><vh>@path Lib/site-packages/</vh>
 <v t="amd.20150503185513.2"><vh>@edit spur.py</vh></v>
+</v>
+</v>
 </v>
 <v t="2014fall.20141212095015.1780"><vh>@edit setup.py</vh></v>
 </v>
-<v t="amd.20150503172957.1"><vh>以下為參考檔案</vh>
-<v t="amd.20150503173029.1"><vh>@path ref</vh>
+<v t="amd.20150503172957.1" a="E"><vh>以下為參考檔案</vh>
+<v t="amd.20150503173029.1" a="E"><vh>@path ref</vh>
 <v t="amd.20150503173008.1" a="E"><vh>@clean wsgi.py</vh>
 <v t="amd.20150503173008.2"><vh>&lt;&lt;declarations&gt;&gt; (wsgi)</vh></v>
 <v t="amd.20150503173008.3" a="E"><vh>class Midterm</vh>
@@ -75,7 +100,7 @@
 <v t="amd.20150503173937.1"><vh>@edit pybean.py</vh></v>
 </v>
 </v>
-<v t="amd.20150508154247.1" a="E"><vh>5個題目</vh>
+<v t="amd.20150508154247.1"><vh>5個題目</vh>
 <v t="amd.20150508154531.1" a="E"><vh>@path five_problems</vh>
 <v t="amd.20150508154258.1"><vh>problem1</vh>
 <v t="amd.20150508154320.1"><vh>@clean for_sum.py</vh></v>
@@ -118,6 +143,7 @@ application_conf = {'/static':{
     }
     
 root = Midterm()
+root.download = Download()
 #root.gear = gear.Gear()
 
 if 'OPENSHIFT_REPO_DIR' in os.environ.keys():
@@ -132,6 +158,8 @@ else:
 import os
 # 導入 random 模組
 import random
+import math
+from cherrypy.lib.static import serve_file
 # 導入 gear 模組
 #import gear
 
@@ -1746,6 +1774,8 @@ def index(self):
     &lt;body&gt;
     &lt;a href="spur"&gt;spur&lt;/a&gt;&lt;br /&gt;
     &lt;a href="drawspur"&gt;drawspur&lt;/a&gt;&lt;br /&gt;
+    &lt;a href="fileuploadform"&gt;上傳檔案&lt;/a&gt;&lt;br /&gt;
+    &lt;a href="download_list"&gt;列出上傳檔案&lt;/a&gt;&lt;br /&gt;
     &lt;/body&gt;
     &lt;/html&gt;
     '''
@@ -1847,11 +1877,8 @@ def drawspur(self, N=20, M=5, P=15):
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
-&lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
 &lt;/head&gt;
-&lt;!-- 啟動 brython() --&gt;
-&lt;body onload="brython()"&gt;
+&lt;body&gt;
     
 &lt;form method=POST action=drawspuraction&gt;
 齒數:&lt;input type=text name=N value='''+str(N)+'''&gt;&lt;br /&gt;
@@ -1860,6 +1887,13 @@ def drawspur(self, N=20, M=5, P=15):
 &lt;input type=submit value=畫出正齒輪輪廓&gt;
 &lt;/form&gt;
 &lt;br /&gt;&lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
+&lt;!-- 載入 brython.js --&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+window.onload=function(){
+brython();
+}
+&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 '''
@@ -1873,11 +1907,8 @@ def drawspuraction(self, N=20, M=5, P=15):
 &lt;html&gt;
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
-&lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
 &lt;/head&gt;
-&lt;!-- 啟動 brython() --&gt;
-&lt;body onload="brython()"&gt;
+&lt;body&gt;
 &lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
     
 &lt;!-- 以下為 canvas 畫圖程式 --&gt;
@@ -1906,6 +1937,13 @@ spur.Spur(ctx).Gear(600, 600, rp, N, P, "blue")
 
 &lt;/script&gt;
 &lt;canvas id="plotarea" width="1200" height="1200"&gt;&lt;/canvas&gt;
+&lt;!-- 載入 brython.js --&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+window.onload=function(){
+brython();
+}
+&lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;
 '''
@@ -1988,5 +2026,312 @@ Write a function that given a list of non negative integers, arranges them such 
 <t tx="amd.20150508161237.1">Problem 5
 
 Write a program that outputs all possibilities to put + or - or nothing between the numbers 1, 2, ..., 9 (in this order) such that the result is always 100. For example: 1 + 2 + 34 – 5 + 67 – 8 + 9 = 100.</t>
+<t tx="office.20150504093049.1">@cherrypy.expose
+# W 為正方體的邊長
+def cube(self, W=10):
+    outstring = '''
+&lt;!DOCTYPE html&gt; 
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;!-- 使用者輸入表單的參數交由 cubeaction 方法處理 --&gt;
+&lt;form method=POST action=cubeaction&gt;
+正方體邊長:&lt;input type=text name=W value='''+str(W)+'''&gt;&lt;br /&gt;
+&lt;input type=submit value=送出&gt;
+&lt;/form&gt;
+&lt;br /&gt;&lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+'''
+
+    return outstring</t>
+<t tx="office.20150504093053.1">@cherrypy.expose
+# W 為正方體邊長, 內定值為 10
+def cubeaction(self, W=10):
+    outstring = '''
+&lt;!DOCTYPE html&gt; 
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
+&lt;!-- 先載入 pfcUtils.js 與 wl_header.js --&gt;
+&lt;script type="text/javascript" src="/static/weblink/pfcUtils.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/weblink/wl_header.js"&gt;
+&lt;!-- 載入 brython.js --&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+document.writeln ("Error loading Pro/Web.Link header!");
+&lt;/script&gt;
+&lt;script&gt;
+window.onload=function(){
+brython();
+}
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;!-- 不要使用 body 啟動 brython() 改為 window level 啟動 --&gt;
+&lt;body onload=""&gt;
+&lt;h1&gt;Creo 參數化零件&lt;/h1&gt;
+&lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
+
+&lt;!-- 以下為 Creo Pro/Web.Link 程式, 將 JavaScrip 改為 Brython 程式 --&gt;
+
+&lt;script type="text/python"&gt;
+from browser import document, window
+from math import *
+
+# 這個區域為 Brython 程式範圍, 註解必須採用 Python 格式
+# 因為 pfcIsWindows() 為原生的 JavaScript 函式, 在 Brython 中引用必須透過 window 物件
+if (!window.pfcIsWindows()) window.netscape.security.PrivilegeManager.enablePrivilege("UniversalXPConnect");
+# 若第三輸入為 false, 表示僅載入 session, 但是不顯示
+# ret 為 model open return
+ret = document.pwl.pwlMdlOpen("cube.prt", "v:/tmp", false)
+if (!ret.Status):
+    window.alert("pwlMdlOpen failed (" + ret.ErrorCode + ")")
+    # 將 ProE 執行階段設為變數 session
+    session = window.pfcGetProESession()
+    # 在視窗中打開零件檔案, 並且顯示出來
+    pro_window = session.OpenFile(pfcCreate("pfcModelDescriptor").CreateFromFileName("cube.prt"))
+    solid = session.GetModel("cube.prt", window.pfcCreate("pfcModelType").MDL_PART)
+    # 在 Brython 中與 Python 語法相同, 只有初值設定問題, 無需宣告變數
+    # length, width, myf, myn, i, j, volume, count, d1Value, d2Value
+    # 將模型檔中的 length 變數設為 javascript 中的 length 變數
+    length = solid.GetParam("a1")
+    # 將模型檔中的 width 變數設為 javascript 中的 width 變數
+    width = solid.GetParam("a2")
+    # 改變零件尺寸
+    # myf=20
+    # myn=20
+    volume = 0
+    count = 0
+    try:
+        # 以下採用 URL 輸入對應變數
+        # createParametersFromArguments ();
+        # 以下則直接利用 javascript 程式改變零件參數
+        for i in range(5):
+            myf ='''+str(W)+'''
+            myn ='''+str(W)+''' + i*2.0
+            # 設定變數值, 利用 ModelItem 中的 CreateDoubleParamValue 轉換成 Pro/Web.Link 所需要的浮點數值
+            d1Value = window.pfcCreate ("MpfcModelItem").CreateDoubleParamValue(myf)
+            d2Value = window.pfcCreate ("MpfcModelItem").CreateDoubleParamValue(myn)
+            # 將處理好的變數值, 指定給對應的零件變數
+            length.Value = d1Value
+            width.Value = d2Value
+            # 零件尺寸重新設定後, 呼叫 Regenerate 更新模型
+            # 在 JavaScript 為 null 在 Brython 為 None
+            solid.Regenerate(None)
+            # 利用 GetMassProperty 取得模型的質量相關物件
+            properties = solid.GetMassProperty(None)
+            # volume = volume + properties.Volume
+            volume = properties.Volume
+            count = count + 1
+            window.alert("執行第"+count+"次,零件總體積:"+volume)
+            # 將零件存為新檔案
+            newfile = document.pwl.pwlMdlSaveAs("cube.prt", "v:/tmp", "cube"+count+".prt")
+            if (!newfile.Status):
+                window.alert("pwlMdlSaveAs failed (" + newfile.ErrorCode + ")")
+            # window.alert("共執行:"+count+"次,零件總體積:"+volume)
+            # window.alert("零件體積:"+properties.Volume)
+            # window.alert("零件體積取整數:"+Math.round(properties.Volume));
+    except:
+        window.alert ("Exception occurred: "+window.pfcGetExceptionType (err))
+&lt;/script&gt;
+'''
+
+    return outstring</t>
+<t tx="office.20150504100507.1"></t>
+<t tx="office.20150504100745.1"></t>
+<t tx="office.20150504100857.1"></t>
+<t tx="office.20150504101130.1"></t>
+<t tx="office.20150504101152.1">可以在網頁前端透過 Brython 程式控制 Creo Parametric 環境中的機械設計零件</t>
+<t tx="office.20150504101237.1">Brython 3.1.1 雖然可以在 IE 9 以上的瀏覽器中運行, 但是與 Creo Parametric 環境中的嵌入式  ActiveX 物件合用時,
+
+產生無法載入 __class__ 的問題
+
+解決方法:
+
+必須深入檢視 brython.js 與 Pro/Web.Link ActiveX 物件導入時, 為何無法載入  __class__
+
+1. 將  brython.js 載入方式從 body 轉為 window 載入, 也是得到同樣的錯誤
+
+2. 已經發現錯誤出現在 brython.js 中的 5003-5005 行
+
+$B.get_class=function(obj){
+if(obj===null){return $B.$NoneDict}
+var klass=obj.__class__
+
+因為將 IE 嵌入 Creo Parametric 後, 有關 JScript 的語法與外部的 IE 有些差異, 因此若要在 Creo Parametric 環境中的 IE 執行 Brython, 需要從了解 
+ JavaScript 程式在 IE 上的差異入手:
+ 
+ IE Embedded (Compact 7): https://msdn.microsoft.com/en-us/library/ee487632.aspx
+
+JScript User's Guide: https://msdn.microsoft.com/en-us/library/4yyeyb0a(v=vs.84).aspx
+
+JScript Language Reference: https://msdn.microsoft.com/en-us/library/yek4tbz0(v=vs.84).aspx
+
+
+
+</t>
+<t tx="office.20150504111057.1">Brython 3.1.1 已經在 IE 9 之後的版本取得相容, 但是當 IE 9 嵌入 Creo Parametric 時, 則無法正確導入 brython.js, 其中對於 Brython 所定義給 Python 程式使用的 get_class 方法一直無法導入 __class__ 物件而出現錯誤.
+
+由於在 Creo Parametric 環境中使用 Brython 的用戶目前應該是絕無僅有, 因此在這個階段, 除了自行修改 brython.js 讓 Brython 可以在嵌入式 IE 執行 Pro/Web.Link, 唯一的方法就是採用 JavaScript 編寫 Pro/Web.Link 程式</t>
+<t tx="office.20150504183254.1">@cherrypy.expose
+def fileuploadform(self):
+    return '''&lt;h1&gt;file upload&lt;/h1&gt;
+&lt;script src="/static/jquery.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script src="/static/axuploader.js" type="text/javascript"&gt;&lt;/script&gt;
+&lt;script&gt;
+$(document).ready(function(){
+$('.prova').axuploader({url:'fileaxupload', allowExt:['jpg','png','gif','7z','pdf','zip','flv','stl','swf'],
+finish:function(x,files)
+    {
+        alert('All files have been uploaded: '+files);
+    },
+enable:true,
+remotePath:function(){
+return 'downloads/';
+}
+});
+});
+&lt;/script&gt;
+&lt;div class="prova"&gt;&lt;/div&gt;
+&lt;input type="button" onclick="$('.prova').axuploader('disable')" value="asd" /&gt;
+&lt;input type="button" onclick="$('.prova').axuploader('enable')" value="ok" /&gt;
+&lt;/section&gt;&lt;/body&gt;&lt;/html&gt;
+'''</t>
+<t tx="office.20150504183312.1">@cherrypy.expose
+def fileaxupload(self, *args, **kwargs):
+    filename = kwargs["ax-file-name"]
+    flag = kwargs["start"]
+    if flag == "0":
+        file = open(download_root_dir+"downloads/"+filename, "wb")
+    else:
+        file = open(download_root_dir+"downloads/"+filename, "ab")
+    file.write(cherrypy.request.body.read())
+    file.close()
+    return "files uploaded!"
+</t>
+<t tx="office.20150504185417.1">@cherrypy.expose
+def download_list(self, item_per_page=5, page=1, keyword=None, *args, **kwargs):
+    files = os.listdir(download_root_dir+"downloads/")
+    total_rows = len(files)
+    totalpage = math.ceil(total_rows/int(item_per_page))
+    starti = int(item_per_page) * (int(page) - 1) + 1
+    endi = starti + int(item_per_page) - 1
+    outstring = "&lt;form method='post' action='delete_file'&gt;"
+    notlast = False
+    if total_rows &gt; 0:
+        outstring += "&lt;br /&gt;"
+        if (int(page) * int(item_per_page)) &lt; total_rows:
+            notlast = True
+        if int(page) &gt; 1:
+            outstring += "&lt;a href='"
+            outstring += "download_list?&amp;amp;page=1&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;&lt;&lt;&lt;/a&gt; "
+            page_num = int(page) - 1
+            outstring += "&lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(page_num)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;Previous&lt;/a&gt; "
+        span = 10
+        for index in range(int(page)-span, int(page)+span):
+            if index&gt;= 0 and index&lt; totalpage:
+                page_now = index + 1 
+                if page_now == int(page):
+                    outstring += "&lt;font size='+1' color='red'&gt;"+str(page)+" &lt;/font&gt;"
+                else:
+                    outstring += "&lt;a href='"
+                    outstring += "download_list?&amp;amp;page="+str(page_now)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                    outstring += "'&gt;"+str(page_now)+"&lt;/a&gt; "
+
+        if notlast == True:
+            nextpage = int(page) + 1
+            outstring += " &lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(nextpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;Next&lt;/a&gt;"
+            outstring += " &lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(totalpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;&gt;&gt;&lt;/a&gt;&lt;br /&gt;&lt;br /&gt;"
+        if (int(page) * int(item_per_page)) &lt; total_rows:
+            notlast = True
+            outstring += downloadlist_access_list(files, starti, endi)+"&lt;br /&gt;"
+        else:
+            outstring += "&lt;br /&gt;&lt;br /&gt;"
+            outstring += downloadlist_access_list(files, starti, total_rows)+"&lt;br /&gt;"
+        
+        if int(page) &gt; 1:
+            outstring += "&lt;a href='"
+            outstring += "download_list?&amp;amp;page=1&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;&lt;&lt;&lt;/a&gt; "
+            page_num = int(page) - 1
+            outstring += "&lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(page_num)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;Previous&lt;/a&gt; "
+        span = 10
+        for index in range(int(page)-span, int(page)+span):
+        #for ($j=$page-$range;$j&lt;$page+$range;$j++)
+            if index &gt;=0 and index &lt; totalpage:
+                page_now = index + 1
+                if page_now == int(page):
+                    outstring += "&lt;font size='+1' color='red'&gt;"+str(page)+" &lt;/font&gt;"
+                else:
+                    outstring += "&lt;a href='"
+                    outstring += "download_list?&amp;amp;page="+str(page_now)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+                    outstring += "'&gt;"+str(page_now)+"&lt;/a&gt; "
+        if notlast == True:
+            nextpage = int(page) + 1
+            outstring += " &lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(nextpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;Next&lt;/a&gt;"
+            outstring += " &lt;a href='"
+            outstring += "download_list?&amp;amp;page="+str(totalpage)+"&amp;amp;item_per_page="+str(item_per_page)+"&amp;amp;keyword="+str(cherrypy.session.get('download_keyword'))
+            outstring += "'&gt;&gt;&gt;&lt;/a&gt;"
+    else:
+        outstring += "no data!"
+    outstring += "&lt;br /&gt;&lt;br /&gt;&lt;input type='submit' value='delete'&gt;&lt;input type='reset' value='reset'&gt;&lt;/form&gt;"
+
+    return "&lt;div class='container'&gt;&lt;nav&gt;"+ \
+        "&lt;/nav&gt;&lt;section&gt;&lt;h1&gt;Download List&lt;/h1&gt;"+outstring+"&lt;br/&gt;&lt;br /&gt;&lt;/body&gt;&lt;/html&gt;"
+</t>
+<t tx="office.20150504185643.1">def downloadlist_access_list(files, starti, endi):
+    # different extension files, associated links were provided
+    # popup window to view images, video or STL files, other files can be downloaded directly
+    # files are all the data to list, from starti to endi
+    # add file size
+    outstring = ""
+    for index in range(int(starti)-1, int(endi)):
+        fileName, fileExtension = os.path.splitext(files[index])
+        fileExtension = fileExtension.lower()
+        fileSize = sizeof_fmt(os.path.getsize(download_root_dir+"downloads/"+files[index]))
+        # images files
+        if fileExtension == ".png" or fileExtension == ".jpg" or fileExtension == ".gif":
+            outstring += '&lt;input type="checkbox" name="filename" value="'+files[index]+'"&gt;&lt;a href="javascript:;" onClick="window.open(\'/downloads/'+ \
+            files[index]+'\',\'images\', \'catalogmode\',\'scrollbars\')"&gt;'+files[index]+'&lt;/a&gt; ('+str(fileSize)+')&lt;br /&gt;'
+        # stl files
+        elif fileExtension == ".stl":
+            outstring += '&lt;input type="checkbox" name="filename" value="'+files[index]+'"&gt;&lt;a href="javascript:;" onClick="window.open(\'/static/viewstl.html?src=/downloads/'+ \
+            files[index]+'\',\'images\', \'catalogmode\',\'scrollbars\')"&gt;'+files[index]+'&lt;/a&gt; ('+str(fileSize)+')&lt;br /&gt;'
+        # flv files
+        elif fileExtension == ".flv":
+            outstring += '&lt;input type="checkbox" name="filename" value="'+files[index]+'"&gt;&lt;a href="javascript:;" onClick="window.open(\'/flvplayer?filepath=/downloads/'+ \
+            files[index]+'\',\'images\', \'catalogmode\',\'scrollbars\')"&gt;'+files[index]+'&lt;/a&gt; ('+str(fileSize)+')&lt;br /&gt;'
+        # direct download files
+        else:
+            outstring += "&lt;input type='checkbox' name='filename' value='"+files[index]+"'&gt;&lt;a href='/download/?filepath="+download_root_dir.replace('\\', '/')+ \
+            "downloads/"+files[index]+"'&gt;"+files[index]+"&lt;/a&gt; ("+str(fileSize)+")&lt;br /&gt;"
+    return outstring
+</t>
+<t tx="office.20150504185717.1">def sizeof_fmt(num):
+    for x in ['bytes','KB','MB','GB']:
+        if num &lt; 1024.0:
+            return "%3.1f%s" % (num, x)
+        num /= 1024.0
+    return "%3.1f%s" % (num, 'TB')
+</t>
+<t tx="office.20150504190303.1">class Download:
+    @others
+</t>
+<t tx="office.20150504190303.2">@cherrypy.expose
+def index(self, filepath):
+    return serve_file(filepath, "application/x-download", "attachment")
+</t>
 </tnodes>
 </leo_file>
