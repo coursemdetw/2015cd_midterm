@@ -38,8 +38,8 @@
 </v>
 <v t="2014fall.20141212095015.1780"><vh>@edit setup.py</vh></v>
 </v>
-<v t="amd.20150503172957.1" a="E"><vh>以下為參考檔案</vh>
-<v t="amd.20150503173029.1" a="E"><vh>@path ref</vh>
+<v t="amd.20150503172957.1"><vh>以下為參考檔案</vh>
+<v t="amd.20150503173029.1"><vh>@path ref</vh>
 <v t="amd.20150503173008.1" a="E"><vh>@clean wsgi.py</vh>
 <v t="amd.20150503173008.2"><vh>&lt;&lt;declarations&gt;&gt; (wsgi)</vh></v>
 <v t="amd.20150503173008.3" a="E"><vh>class Midterm</vh>
@@ -73,6 +73,19 @@
 <v t="amd.20150503173429.2"><vh>@edit spur.py</vh></v>
 </v>
 <v t="amd.20150503173937.1"><vh>@edit pybean.py</vh></v>
+</v>
+</v>
+<v t="amd.20150508154247.1" a="E"><vh>5個題目</vh>
+<v t="amd.20150508154531.1" a="E"><vh>@path five_problems</vh>
+<v t="amd.20150508154258.1"><vh>problem1</vh>
+<v t="amd.20150508154320.1"><vh>@clean for_sum.py</vh></v>
+<v t="amd.20150508154518.1"><vh>@clean while_sum.py</vh></v>
+<v t="amd.20150508155026.1"><vh>@clean recursive_sum.py</vh></v>
+</v>
+<v t="amd.20150508161146.1"><vh>problem2</vh></v>
+<v t="amd.20150508161156.1"><vh>problem3</vh></v>
+<v t="amd.20150508161218.1"><vh>problem4</vh></v>
+<v t="amd.20150508161237.1"><vh>problem5</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1719,130 +1732,6 @@ if (!newfile.Status) {
     return outstring
 </t>
 <t tx="amd.20150503173429.1"></t>
-<t tx="amd.20150503173429.2">@language python
-#coding: utf-8
-import math
-# 導入數學函式後, 圓周率為 pi
-# deg 為角度轉為徑度的轉換因子
-deg = math.pi/180.
-class Spur(object):
-    def __init__(self, ctx):
-        self.ctx = ctx
-
-    def create_line(self, x1, y1, x2, y2, width=3, fill="red"):
-        self.ctx.beginPath()
-        self.ctx.lineWidth = width
-        self.ctx.moveTo(x1, y1)
-        self.ctx.lineTo(x2, y2)
-        self.ctx.strokeStyle = fill
-        self.ctx.stroke()
-    #
-    # 以下分別為正齒輪繪圖與主 tkinter 畫布繪圖
-    #
-    # 定義一個繪正齒輪的繪圖函式
-    # midx 為齒輪圓心 x 座標
-    # midy 為齒輪圓心 y 座標
-    # rp 為節圓半徑, n 為齒數
-    # pa 為壓力角 (deg)
-    # rot 為旋轉角 (deg)
-    # 注意 n 為 52 齒時繪圖產生錯誤, 因為 base circle 與齒根圓大小未進行判斷, 必須要修正
-    def Gear(self, midx, midy, rp, n=20, pa=20, color="black"):
-        # 齒輪漸開線分成 15 線段繪製
-        imax = 15
-        # 在輸入的畫布上繪製直線, 由圓心到節圓 y 軸頂點畫一直線
-        self.create_line(midx, midy, midx, midy-rp)
-        # 畫出 rp 圓, 畫圓函式尚未定義
-        #create_oval(midx-rp, midy-rp, midx+rp, midy+rp, width=2)
-        # a 為模數 (代表公制中齒的大小), 模數為節圓直徑(稱為節徑)除以齒數
-        # 模數也就是齒冠大小
-        a=2*rp/n
-        # d 為齒根大小, 為模數的 1.157 或 1.25倍, 這裡採 1.25 倍
-        d=2.5*rp/n
-        # ra 為齒輪的外圍半徑
-        ra=rp+a
-        # 畫出 ra 圓, 畫圓函式尚未定義
-        #create_oval(midx-ra, midy-ra, midx+ra, midy+ra, width=1)
-        # rb 則為齒輪的基圓半徑
-        # 基圓為漸開線長齒之基準圓
-        rb=rp*math.cos(pa*deg)
-        # 畫出 rb 圓 (基圓), 畫圓函式尚未定義
-        #create_oval(midx-rb, midy-rb, midx+rb, midy+rb, width=1)
-        # rd 為齒根圓半徑
-        rd=rp-d
-        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-        # 畫出 rd 圓 (齒根圓), 畫圓函式尚未定義
-        #create_oval(midx-rd, midy-rd, midx+rd, midy+rd, width=1)
-        # dr 則為基圓到齒頂圓半徑分成 imax 段後的每段半徑增量大小
-        # 將圓弧分成 imax 段來繪製漸開線
-        # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-        if rd&gt;rb:
-            dr = (ra-rd)/imax
-        else:
-            dr=(ra-rb)/imax
-        # tan(pa*deg)-pa*deg 為漸開線函數
-        sigma=math.pi/(2*n)+math.tan(pa*deg)-pa*deg
-        for j in range(n):
-            ang=-2.*j*math.pi/n+sigma
-            ang2=2.*j*math.pi/n+sigma
-            lxd=midx+rd*math.sin(ang2-2.*math.pi/n)
-            lyd=midy-rd*math.cos(ang2-2.*math.pi/n)
-            for i in range(imax+1):
-                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-                if rd&gt;rb:
-                    r=rd+i*dr
-                else:
-                    r=rb+i*dr
-                theta=math.sqrt((r*r)/(rb*rb)-1.)
-                alpha=theta-math.atan(theta)
-                xpt=r*math.sin(alpha-ang)
-                ypt=r*math.cos(alpha-ang)
-                xd=rd*math.sin(-ang)
-                yd=rd*math.cos(-ang)
-                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
-                if(i==0):
-                    last_x = midx+xd
-                    last_y = midy-yd
-                # 由左側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
-                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
-                # 最後一點, 則為齒頂圓
-                if(i==imax):
-                    lfx=midx+xpt
-                    lfy=midy-ypt
-                last_x = midx+xpt
-                last_y = midy-ypt
-            # the line from last end of dedendum point to the recent
-            # end of dedendum point
-            # lxd 為齒根圓上的左側 x 座標, lyd 則為 y 座標
-            # 下列為齒根圓上用來近似圓弧的直線
-            self.create_line((lxd),(lyd),(midx+xd),(midy-yd),fill=color)
-            for i in range(imax+1):
-                # 當 rd 大於 rb 時, 漸開線並非畫至 rb, 而是 rd
-                if rd&gt;rb:
-                    r=rd+i*dr
-                else:
-                    r=rb+i*dr
-                theta=math.sqrt((r*r)/(rb*rb)-1.)
-                alpha=theta-math.atan(theta)
-                xpt=r*math.sin(ang2-alpha)
-                ypt=r*math.cos(ang2-alpha)
-                xd=rd*math.sin(ang2)
-                yd=rd*math.cos(ang2)
-                # i=0 時, 繪線起點由齒根圓上的點, 作為起點
-                if(i==0):
-                    last_x = midx+xd
-                    last_y = midy-yd
-                # 由右側齒根圓作為起點, 除第一點 (xd,yd) 齒根圓上的起點外, 其餘的 (xpt,ypt)則為漸開線上的分段點
-                self.create_line((midx+xpt),(midy-ypt),(last_x),(last_y),fill=color)
-                # 最後一點, 則為齒頂圓
-                if(i==imax):
-                    rfx=midx+xpt
-                    rfy=midy-ypt
-                last_x = midx+xpt
-                last_y = midy-ypt
-            # lfx 為齒頂圓上的左側 x 座標, lfy 則為 y 座標
-            # 下列為齒頂圓上用來近似圓弧的直線
-            self.create_line(lfx,lfy,rfx,rfy,fill=color)
-</t>
 <t tx="amd.20150503173602.1"># 以 @ 開頭的 cherrypy.expose 為 decorator, 用來表示隨後的成員方法, 可以直接讓使用者以 URL 連結執行
 @cherrypy.expose
 # index 方法為 CherryPy 各類別成員方法中的內建(default)方法, 當使用者執行時未指定方法, 系統將會優先執行 index 方法
@@ -2023,5 +1912,81 @@ spur.Spur(ctx).Gear(600, 600, rp, N, P, "blue")
 
     return outstring</t>
 <t tx="amd.20150503185513.1"></t>
+<t tx="amd.20150508154247.1">The 5 problems
+
+(The following problems are ridiculously simple, but you'd be surprise to discover how many people struggle with them. To the point of not getting anything done at all. Seriously.)
+
+Problem 1
+
+Write three functions that compute the sum of the numbers in a given list using a for-loop, a while-loop, and recursion.
+
+Problem 2
+
+Write a function that combines two lists by alternatingly taking elements. For example: given the two lists [a, b, c] and [1, 2, 3], the function should return [a, 1, b, 2, c, 3].
+
+Problem 3
+
+Write a function that computes the list of the first 100 Fibonacci numbers. By definition, the first two numbers in the Fibonacci sequence are 0 and 1, and each subsequent number is the sum of the previous two. As an example, here are the first 10 Fibonnaci numbers: 0, 1, 1, 2, 3, 5, 8, 13, 21, and 34.
+
+Problem 4
+
+Write a function that given a list of non negative integers, arranges them such that they form the largest possible number. For example, given [50, 2, 1, 9], the largest formed number is 95021.
+
+Problem 5
+
+Write a program that outputs all possibilities to put + or - or nothing between the numbers 1, 2, ..., 9 (in this order) such that the result is always 100. For example: 1 + 2 + 34 – 5 + 67 – 8 + 9 = 100.</t>
+<t tx="amd.20150508154258.1">Problem 1
+
+Write three functions that compute the sum of the numbers in a given list using a for-loop, a while-loop, and recursion.</t>
+<t tx="amd.20150508154320.1">@language python
+
+def for_sum(mylist):
+    sum = 0
+    for i in range(len(mylist)):
+        sum += mylist[i]
+    return sum
+
+mylist = [1, 4, 5, 3, 7]
+
+sum = for_sum(mylist)
+g.es("sum is:", sum)</t>
+<t tx="amd.20150508154518.1">@language python
+
+def while_sum(mylist):
+    i = 0
+    sum = 0
+    while i &lt; len(mylist):
+        sum += mylist[i]
+        i += 1
+    return sum
+
+mylist = [1, 4, 5, 3, 7]
+sum = while_sum(mylist)
+g.es("sum is:", sum)</t>
+<t tx="amd.20150508154531.1"></t>
+<t tx="amd.20150508155026.1">@language python
+def recur_sum(mylist):
+    if len(mylist) == 1:
+        return mylist[0]
+    else:
+        g.es(mylist[0],"+ 遞迴加(", mylist[1:], ")")
+        return mylist[0] + recur_sum(mylist[1:])
+
+mylist = [1, 4, 5, 3, 7]
+sum = recur_sum(mylist)
+g.es("sum is:", sum)</t>
+<t tx="amd.20150508161146.1">Problem 2
+
+Write a function that combines two lists by alternatingly taking elements. For example: given the two lists [a, b, c] and [1, 2, 3], the function should return [a, 1, b, 2, c, 3].</t>
+<t tx="amd.20150508161156.1">Problem 3
+
+Write a function that computes the list of the first 100 Fibonacci numbers. By definition, the first two numbers in the Fibonacci sequence are 0 and 1, and each subsequent number is the sum of the previous two. As an example, here are the first 10 Fibonnaci numbers: 0, 1, 1, 2, 3, 5, 8, 13, 21, and 34.</t>
+<t tx="amd.20150508161218.1">Problem 4
+
+Write a function that given a list of non negative integers, arranges them such that they form the largest possible number. For example, given [50, 2, 1, 9], the largest formed number is 95021.
+</t>
+<t tx="amd.20150508161237.1">Problem 5
+
+Write a program that outputs all possibilities to put + or - or nothing between the numbers 1, 2, ..., 9 (in this order) such that the result is always 100. For example: 1 + 2 + 34 – 5 + 67 – 8 + 9 = 100.</t>
 </tnodes>
 </leo_file>
