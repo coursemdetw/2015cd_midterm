@@ -65,7 +65,7 @@
 </v>
 <v t="2014fall.20141212095015.1780"><vh>@edit setup.py</vh></v>
 </v>
-<v t="amd.20150503172957.1"><vh>以下為參考檔案</vh>
+<v t="amd.20150503172957.1" a="E"><vh>以下為參考檔案</vh>
 <v t="amd.20150503173029.1" a="E"><vh>@path ref</vh>
 <v t="amd.20150503173008.1" a="E"><vh>@clean wsgi.py</vh>
 <v t="amd.20150503173008.2"><vh>&lt;&lt;declarations&gt;&gt; (wsgi)</vh></v>
@@ -100,6 +100,19 @@
 <v t="amd.20150503173429.2"><vh>@edit spur.py</vh></v>
 </v>
 <v t="amd.20150503173937.1"><vh>@edit pybean.py</vh></v>
+</v>
+</v>
+<v t="amd.20150508154247.1"><vh>5個題目</vh>
+<v t="amd.20150508154531.1" a="E"><vh>@path five_problems</vh>
+<v t="amd.20150508154258.1"><vh>problem1</vh>
+<v t="amd.20150508154320.1"><vh>@clean for_sum.py</vh></v>
+<v t="amd.20150508154518.1"><vh>@clean while_sum.py</vh></v>
+<v t="amd.20150508155026.1"><vh>@clean recursive_sum.py</vh></v>
+</v>
+<v t="amd.20150508161146.1"><vh>problem2</vh></v>
+<v t="amd.20150508161156.1"><vh>problem3</vh></v>
+<v t="amd.20150508161218.1"><vh>problem4</vh></v>
+<v t="amd.20150508161237.1"><vh>problem5</vh></v>
 </v>
 </v>
 </vnodes>
@@ -1944,6 +1957,82 @@ brython();
 
     return outstring</t>
 <t tx="amd.20150503185513.1"></t>
+<t tx="amd.20150508154247.1">The 5 problems
+
+(The following problems are ridiculously simple, but you'd be surprise to discover how many people struggle with them. To the point of not getting anything done at all. Seriously.)
+
+Problem 1
+
+Write three functions that compute the sum of the numbers in a given list using a for-loop, a while-loop, and recursion.
+
+Problem 2
+
+Write a function that combines two lists by alternatingly taking elements. For example: given the two lists [a, b, c] and [1, 2, 3], the function should return [a, 1, b, 2, c, 3].
+
+Problem 3
+
+Write a function that computes the list of the first 100 Fibonacci numbers. By definition, the first two numbers in the Fibonacci sequence are 0 and 1, and each subsequent number is the sum of the previous two. As an example, here are the first 10 Fibonnaci numbers: 0, 1, 1, 2, 3, 5, 8, 13, 21, and 34.
+
+Problem 4
+
+Write a function that given a list of non negative integers, arranges them such that they form the largest possible number. For example, given [50, 2, 1, 9], the largest formed number is 95021.
+
+Problem 5
+
+Write a program that outputs all possibilities to put + or - or nothing between the numbers 1, 2, ..., 9 (in this order) such that the result is always 100. For example: 1 + 2 + 34 – 5 + 67 – 8 + 9 = 100.</t>
+<t tx="amd.20150508154258.1">Problem 1
+
+Write three functions that compute the sum of the numbers in a given list using a for-loop, a while-loop, and recursion.</t>
+<t tx="amd.20150508154320.1">@language python
+
+def for_sum(mylist):
+    sum = 0
+    for i in range(len(mylist)):
+        sum += mylist[i]
+    return sum
+
+mylist = [1, 4, 5, 3, 7]
+
+sum = for_sum(mylist)
+g.es("sum is:", sum)</t>
+<t tx="amd.20150508154518.1">@language python
+
+def while_sum(mylist):
+    i = 0
+    sum = 0
+    while i &lt; len(mylist):
+        sum += mylist[i]
+        i += 1
+    return sum
+
+mylist = [1, 4, 5, 3, 7]
+sum = while_sum(mylist)
+g.es("sum is:", sum)</t>
+<t tx="amd.20150508154531.1"></t>
+<t tx="amd.20150508155026.1">@language python
+def recur_sum(mylist):
+    if len(mylist) == 1:
+        return mylist[0]
+    else:
+        g.es(mylist[0],"+ 遞迴加(", mylist[1:], ")")
+        return mylist[0] + recur_sum(mylist[1:])
+
+mylist = [1, 4, 5, 3, 7]
+sum = recur_sum(mylist)
+g.es("sum is:", sum)</t>
+<t tx="amd.20150508161146.1">Problem 2
+
+Write a function that combines two lists by alternatingly taking elements. For example: given the two lists [a, b, c] and [1, 2, 3], the function should return [a, 1, b, 2, c, 3].</t>
+<t tx="amd.20150508161156.1">Problem 3
+
+Write a function that computes the list of the first 100 Fibonacci numbers. By definition, the first two numbers in the Fibonacci sequence are 0 and 1, and each subsequent number is the sum of the previous two. As an example, here are the first 10 Fibonnaci numbers: 0, 1, 1, 2, 3, 5, 8, 13, 21, and 34.</t>
+<t tx="amd.20150508161218.1">Problem 4
+
+Write a function that given a list of non negative integers, arranges them such that they form the largest possible number. For example, given [50, 2, 1, 9], the largest formed number is 95021.
+</t>
+<t tx="amd.20150508161237.1">Problem 5
+
+Write a program that outputs all possibilities to put + or - or nothing between the numbers 1, 2, ..., 9 (in this order) such that the result is always 100. For example: 1 + 2 + 34 – 5 + 67 – 8 + 9 = 100.</t>
 <t tx="office.20150504093049.1">@cherrypy.expose
 # W 為正方體的邊長
 def cube(self, W=10):
