@@ -48,6 +48,8 @@
 <v t="office.20150504190303.2"><vh>index</vh></v>
 </v>
 </v>
+<v t="office.20150518155258.1"><vh>@edit man.py</vh></v>
+<v t="office.20150518155308.1"><vh>@edit man2.py</vh></v>
 <v t="office.20150504100507.1" a="E"><vh>@path static</vh>
 <v t="office.20150504184156.1"><vh>@edit axuploader.js</vh></v>
 <v t="office.20150504100857.1" a="E"><vh>@path weblink</vh>
@@ -131,6 +133,9 @@ application_conf = {'/static':{
     
 root = Midterm()
 root.download = Download()
+root.man = man.MAN()
+root.man2 = man2.MAN()
+
 #root.gear = gear.Gear()
 
 if 'OPENSHIFT_REPO_DIR' in os.environ.keys():
@@ -149,6 +154,8 @@ import math
 from cherrypy.lib.static import serve_file
 # 導入 gear 模組
 #import gear
+import man
+import man2
 
 ################# (2) 廣域變數設定區
 # 確定程式檔案所在目錄, 在 Windows 下有最後的反斜線
