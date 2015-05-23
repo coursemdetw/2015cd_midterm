@@ -81,7 +81,7 @@ class Hello(object):
     <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <!-- 載入 brython.js -->
-    <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
+    <script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"></script>
     <script src="/static/Cango2D.js" type="text/javascript"></script>
     <script src="/static/gearUtils-04.js" type="text/javascript"></script>
     </head>
@@ -162,7 +162,7 @@ class Hello(object):
     <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <!-- 載入 brython.js -->
-    <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
+    <script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"></script>
     <script src="/static/Cango2D.js" type="text/javascript"></script>
     <script src="/static/gearUtils-04.js" type="text/javascript"></script>
     </head>
@@ -189,7 +189,7 @@ class Hello(object):
     <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <!-- 載入 brython.js -->
-    <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
+    <script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"></script>
     <script src="/static/Cango2D.js" type="text/javascript"></script>
     <script src="/static/gearUtils-04.js" type="text/javascript"></script>
     </head>
@@ -216,7 +216,7 @@ class Hello(object):
     <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <!-- 載入 brython.js -->
-    <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
+    <script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"></script>
     <script src="/static/Cango2D.js" type="text/javascript"></script>
     <script src="/static/gearUtils-04.js" type="text/javascript"></script>
     </head>
@@ -281,7 +281,7 @@ class Hello(object):
     <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <!-- 載入 brython.js -->
-    <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
+    <script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"></script>
 
     <script type="text/javascript" src="/static/weblink/pfcUtils.js"></script>
     <script type="text/javascript" src="/static/weblink/wl_header.js"></script>
@@ -564,7 +564,7 @@ class Hello(object):
     <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <!-- 載入 brython.js -->
-    <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
+    <script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"></script>
     <script src="/static/Cango2D.js" type="text/javascript"></script>
     <script src="/static/gearUtils-04.js" type="text/javascript"></script>
     </head>
@@ -710,7 +710,7 @@ class Hello(object):
     <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <!-- 載入 brython.js -->
-    <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
+    <script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"></script>
     <script src="/static/Cango2D.js" type="text/javascript"></script>
     <script src="/static/gearUtils-04.js" type="text/javascript"></script>
     </head>
@@ -818,7 +818,7 @@ class Hello(object):
     <head>
     <meta http-equiv="content-type" content="text/html;charset=utf-8">
     <!-- 載入 brython.js -->
-    <script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"></script>
+    <script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"></script>
     <script src="/static/Cango2D.js" type="text/javascript"></script>
     <script src="/static/gearUtils-04.js" type="text/javascript"></script>
     </head>

@@ -15,7 +15,7 @@
 <v t="2014fall.20141212095015.1786"><vh>@string initial_split_orientation = horizontal</vh></v>
 </v>
 <v t="2015.20150330144929.1714" a="E"><vh>以下為協同產品設計實習期中考試</vh>
-<v t="amd.20150503180635.1"><vh>與 OpenShift 應用程式同步</vh>
+<v t="amd.20150503180635.1" a="E"><vh>與 OpenShift 應用程式同步</vh>
 <v t="amd.20150503182305.1"><vh>錯誤訊息</vh></v>
 <v t="amd.20150503182956.1"><vh>已經完成 Github 倉儲與 OpenShift 同步</vh></v>
 <v t="amd.20150503183108.1"><vh>傳回學號</vh></v>
@@ -55,15 +55,19 @@
 <v t="office.20150504101740.1"><vh>@edit wl_header.js</vh></v>
 </v>
 <v t="office.20150504100745.1" a="E"><vh>@path Brython3.1.1-20150328-091302</vh>
-<v t="office.20150504100543.1"><vh>@edit brython.js</vh></v>
 <v t="amd.20150503185513.1" a="E"><vh>@path Lib/site-packages/</vh>
 <v t="amd.20150503185513.2"><vh>@edit spur.py</vh></v>
+</v>
+</v>
+<v t="amd.20150523213946.1" a="E"><vh>@path Brython3.1.3-20150514-095342</vh>
+<v t="amd.20150523213946.3" a="E"><vh>@path Lib/site-packages/</vh>
+<v t="amd.20150523213946.4"><vh>@edit spur.py</vh></v>
 </v>
 </v>
 </v>
 <v t="2014fall.20141212095015.1780"><vh>@edit setup.py</vh></v>
 </v>
-<v t="amd.20150503172957.1" a="E"><vh>以下為參考檔案</vh>
+<v t="amd.20150503172957.1"><vh>以下為參考檔案</vh>
 <v t="amd.20150503173029.1" a="E"><vh>@path ref</vh>
 <v t="amd.20150503173008.1" a="E"><vh>@clean wsgi.py</vh>
 <v t="amd.20150503173008.2"><vh>&lt;&lt;declarations&gt;&gt; (wsgi)</vh></v>
@@ -88,18 +92,6 @@
 <v t="amd.20150503173343.4"><vh>__init__</vh></v>
 <v t="amd.20150503173343.5"><vh>default</vh></v>
 <v t="amd.20150503173343.6"><vh>index</vh></v>
-<v t="amd.20150503173343.7"><vh>interpolation</vh></v>
-<v t="amd.20150503173343.8"><vh>gear_width</vh></v>
-<v t="amd.20150503173343.9"><vh>cube_weblink</vh></v>
-<v t="amd.20150503173343.10"><vh>gear_weblink</vh></v>
-</v>
-</v>
-<v t="amd.20150503173429.1"><vh>@path static/Brython3.1.1-20150328-091302/Lib/site-packages/</vh>
-<v t="amd.20150503173429.2"><vh>@edit spur.py</vh></v>
-</v>
-<v t="amd.20150503173937.1"><vh>@edit pybean.py</vh></v>
-</v>
-</v>
 <v t="amd.20150508154247.1"><vh>5個題目</vh>
 <v t="amd.20150508154531.1" a="E"><vh>@path five_problems</vh>
 <v t="amd.20150508154258.1"><vh>problem1</vh>
@@ -113,6 +105,16 @@
 <v t="amd.20150508161237.1"><vh>problem5</vh></v>
 </v>
 </v>
+<v t="amd.20150503173343.7"><vh>interpolation</vh></v>
+<v t="amd.20150503173343.8"><vh>gear_width</vh></v>
+<v t="amd.20150503173343.9"><vh>cube_weblink</vh></v>
+<v t="amd.20150503173343.10"><vh>gear_weblink</vh></v>
+</v>
+</v>
+<v t="amd.20150503173937.1"><vh>@edit pybean.py</vh></v>
+</v>
+</v>
+<v t="amd.20150512203202.1"><vh>asciitbinary</vh></v>
 </vnodes>
 <tnodes>
 <t tx="2014fall.20141212095015.1774"></t>
@@ -338,7 +340,7 @@ def do3Dgear(self, N=20, M=5, P=15):
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 
 &lt;script type="text/javascript" src="/static/weblink/pfcUtils.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="/static/weblink/wl_header.js"&gt;&lt;/script&gt;
@@ -622,7 +624,7 @@ def mygeartest(self, N=20, M=5, P=15):
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 &lt;script src="/static/Cango2D.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="/static/gearUtils-04.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;/head&gt;
@@ -769,7 +771,7 @@ def mygeartest2(self, N=20, M=5, P=15):
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 &lt;script src="/static/Cango2D.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="/static/gearUtils-04.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;/head&gt;
@@ -878,7 +880,7 @@ def my3Dgeartest(self, N=20, M=5, P=15):
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 &lt;script src="/static/Cango2D.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="/static/gearUtils-04.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;/head&gt;
@@ -1130,7 +1132,7 @@ def index(self, guess=None):
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 &lt;script src="/static/Cango2D.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="/static/gearUtils-04.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;/head&gt;
@@ -1212,7 +1214,7 @@ def twoDgear(self, N=20, M=5, P=15):
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 &lt;script src="/static/Cango2D.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="/static/gearUtils-04.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;/head&gt;
@@ -1240,7 +1242,7 @@ def threeDgear(self, N=20, M=5, P=15):
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 &lt;script src="/static/Cango2D.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="/static/gearUtils-04.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;/head&gt;
@@ -1268,7 +1270,7 @@ def do2Dgear(self, N=20, M=5, P=15):
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 &lt;script src="/static/Cango2D.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;script src="/static/gearUtils-04.js" type="text/javascript"&gt;&lt;/script&gt;
 &lt;/head&gt;
@@ -1759,7 +1761,6 @@ if (!newfile.Status) {
 '''
     return outstring
 </t>
-<t tx="amd.20150503173429.1"></t>
 <t tx="amd.20150503173602.1"># 以 @ 開頭的 cherrypy.expose 為 decorator, 用來表示隨後的成員方法, 可以直接讓使用者以 URL 連結執行
 @cherrypy.expose
 # index 方法為 CherryPy 各類別成員方法中的內建(default)方法, 當使用者執行時未指定方法, 系統將會優先執行 index 方法
@@ -1829,7 +1830,7 @@ def spur(self, N=20, M=5, P=15):
 &lt;head&gt;
 &lt;meta http-equiv="content-type" content="text/html;charset=utf-8"&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 &lt;/head&gt;
 &lt;!-- 啟動 brython() --&gt;
 &lt;body onload="brython()"&gt;
@@ -1888,7 +1889,7 @@ def drawspur(self, N=20, M=5, P=15):
 &lt;/form&gt;
 &lt;br /&gt;&lt;a href="index"&gt;index&lt;/a&gt;&lt;br /&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 &lt;script&gt;
 window.onload=function(){
 brython();
@@ -1938,7 +1939,7 @@ spur.Spur(ctx).Gear(600, 600, rp, N, P, "blue")
 &lt;/script&gt;
 &lt;canvas id="plotarea" width="1200" height="1200"&gt;&lt;/canvas&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 &lt;script&gt;
 window.onload=function(){
 brython();
@@ -2026,6 +2027,107 @@ Write a function that given a list of non negative integers, arranges them such 
 <t tx="amd.20150508161237.1">Problem 5
 
 Write a program that outputs all possibilities to put + or - or nothing between the numbers 1, 2, ..., 9 (in this order) such that the result is always 100. For example: 1 + 2 + 34 – 5 + 67 – 8 + 9 = 100.</t>
+<t tx="amd.20150512203202.1">import struct
+normals = []
+points = []
+triangles = []
+triangle_number = 0
+def load_binary_stl(fp):
+    '''
+    二位元 STL 檔案格式如下:
+    檔案標頭共有 80 個字元(bytes), 內容通常省略, 但是內容不可使用 solid, 以免與文字檔案 STL 混淆
+    UINT8[80] – Header
+    UINT32 – Number of triangles (I:佔 4 bytes 的 unsigned integer)
+      
+    foreach triangle
+    REAL32[3] – Normal vector (f:每一座標分量為一佔 4 bytes 的 float, 共佔 12 bytes)
+    REAL32[3] – Vertex 1
+    REAL32[3] – Vertex 2
+    REAL32[3] – Vertex 3
+    UINT16 – Attribute byte count (H:兩個 bytes 的 unsigned short, 表示 attribute byte count)
+    end
+      
+    '''
+    # 已經在外部開檔
+    #fp=open(filename,'rb')
+    header=fp.read(80)
+    triangle_number = struct.unpack('I',fp.read(4))[0]
+    #print(triangle_number)
+    count=0
+    while True:
+        try:
+            p=fp.read(12)
+            if len(p)==12:
+                n=[struct.unpack('f',p[0:4])[0],struct.unpack('f',p[4:8])[0],struct.unpack('f',p[8:12])[0]]
+                normals.append(n)
+                l = len(points)
+                #print(n)
+            p=fp.read(12)
+            if len(p)==12:
+                p1=[struct.unpack('f',p[0:4])[0],struct.unpack('f',p[4:8])[0],struct.unpack('f',p[8:12])[0]]
+                points.append(p1)
+                #print(p1)
+            p=fp.read(12)
+            if len(p)==12:
+                p2=[struct.unpack('f',p[0:4])[0],struct.unpack('f',p[4:8])[0],struct.unpack('f',p[8:12])[0]]
+                points.append(p2)
+            p=fp.read(12)
+            if len(p)==12:
+                p3=[struct.unpack('f',p[0:4])[0],struct.unpack('f',p[4:8])[0],struct.unpack('f',p[8:12])[0]]
+                points.append(p3)
+                triangles.append((l, l+1, l+2))
+            # 使用 count 來計算三角形平面個數
+            # triangle_number 為 STL 檔案中的三角形個數
+            count += 1
+            #print(count)
+            # 在前面 12*4 個 bytes 的 normal 與三個點資料後, 為
+            # 一個 2 bytes 長的 unsigned short, 其值為零, 為 attribute
+            fp.read(2)
+            # 讀完所有三角平面後, 即跳出 while
+            if count &gt; triangle_number:
+                break
+        except EOFError:
+            break
+    #fp.close()
+def read_length(f):
+    length = struct.unpack("@i", f.read(4))
+    return length[0]
+def read_header(f):
+    f.seek(f.tell()+80)
+def write_as_ascii(outfilename):
+    f = open(outfilename, "w")
+    f.write ("solid "+outfilename+"\n")
+    for n  in range(len(triangles)):
+        f.write ("facet normal {} {} {}\n".format(normals[n][0],normals[n][1],normals[n][2]))
+        f.write ("outer loop\n")
+        f.write ("vertex {} {} {}\n".format(points[triangles[n][0]][0],points[triangles[n][0]][1],points[triangles[n][0]][2]))
+        f.write ("vertex {} {} {}\n".format(points[triangles[n][1]][0],points[triangles[n][1]][1],points[triangles[n][1]][2]))
+        f.write ("vertex {} {} {}\n".format(points[triangles[n][2]][0],points[triangles[n][2]][1],points[triangles[n][2]][2]))
+        f.write ("endloop\n")
+        f.write ("endfacet\n")
+    f.write ("endsolid "+outfilename+"\n")
+    f.close()
+def main():
+    infilename = "spikeball_bin.stl"
+    outfilename = "spikeball_ascii.stl"
+    try:
+        f = open(infilename, "rb")
+        #read_header(f)
+        #l = read_length(f)
+        try:
+            load_binary_stl(f)
+            l = len(normals)
+        except Exception as e:
+            print("Exception",e)
+        print(len(normals), len(points), len(triangles), l)
+        write_as_ascii(outfilename)
+        print("done")
+    except Exception as e:
+        print(e)
+if __name__ == '__main__':
+    main()</t>
+<t tx="amd.20150523213946.1"></t>
+<t tx="amd.20150523213946.3"></t>
 <t tx="office.20150504093049.1">@cherrypy.expose
 # W 為正方體的邊長
 def cube(self, W=10):
@@ -2059,7 +2161,7 @@ def cubeaction(self, W=10):
 &lt;script type="text/javascript" src="/static/weblink/pfcUtils.js"&gt;&lt;/script&gt;
 &lt;script type="text/javascript" src="/static/weblink/wl_header.js"&gt;
 &lt;!-- 載入 brython.js --&gt;
-&lt;script type="text/javascript" src="/static/Brython3.1.1-20150328-091302/brython.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="/static/Brython3.1.3-20150514-095342/brython.js"&gt;&lt;/script&gt;
 document.writeln ("Error loading Pro/Web.Link header!");
 &lt;/script&gt;
 &lt;script&gt;
@@ -2207,8 +2309,9 @@ def fileaxupload(self, *args, **kwargs):
     else:
         file = open(download_root_dir+"downloads/"+filename, "ab")
     file.write(cherrypy.request.body.read())
+    header= cherrypy.request.body.read(80)
     file.close()
-    return "files uploaded!"
+    return "files uploaded!"+header.decode("UTF-8")
 </t>
 <t tx="office.20150504185417.1">@cherrypy.expose
 def download_list(self, item_per_page=5, page=1, keyword=None, *args, **kwargs):

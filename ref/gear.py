@@ -115,6 +115,77 @@ class Gear(object):
         outstring += "</form>"
 
         return outstring
+    The 5 problems
+
+    (The following problems are ridiculously simple, but you'd be surprise to discover how many people struggle with them. To the point of not getting anything done at all. Seriously.)
+
+    Problem 1
+
+    Write three functions that compute the sum of the numbers in a given list using a for-loop, a while-loop, and recursion.
+
+    Problem 2
+
+    Write a function that combines two lists by alternatingly taking elements. For example: given the two lists [a, b, c] and [1, 2, 3], the function should return [a, 1, b, 2, c, 3].
+
+    Problem 3
+
+    Write a function that computes the list of the first 100 Fibonacci numbers. By definition, the first two numbers in the Fibonacci sequence are 0 and 1, and each subsequent number is the sum of the previous two. As an example, here are the first 10 Fibonnaci numbers: 0, 1, 1, 2, 3, 5, 8, 13, 21, and 34.
+
+    Problem 4
+
+    Write a function that given a list of non negative integers, arranges them such that they form the largest possible number. For example, given [50, 2, 1, 9], the largest formed number is 95021.
+
+    Problem 5
+
+    Write a program that outputs all possibilities to put + or - or nothing between the numbers 1, 2, ..., 9 (in this order) such that the result is always 100. For example: 1 + 2 + 34 – 5 + 67 – 8 + 9 = 100.
+    Problem 1
+
+    Write three functions that compute the sum of the numbers in a given list using a for-loop, a while-loop, and recursion.
+
+    def for_sum(mylist):
+        sum = 0
+        for i in range(len(mylist)):
+            sum += mylist[i]
+        return sum
+
+    mylist = [1, 4, 5, 3, 7]
+
+    sum = for_sum(mylist)
+    g.es("sum is:", sum)
+
+    def while_sum(mylist):
+        i = 0
+        sum = 0
+        while i < len(mylist):
+            sum += mylist[i]
+            i += 1
+        return sum
+
+    mylist = [1, 4, 5, 3, 7]
+    sum = while_sum(mylist)
+    g.es("sum is:", sum)
+    def recur_sum(mylist):
+        if len(mylist) == 1:
+            return mylist[0]
+        else:
+            g.es(mylist[0],"+ 遞迴加(", mylist[1:], ")")
+            return mylist[0] + recur_sum(mylist[1:])
+
+    mylist = [1, 4, 5, 3, 7]
+    sum = recur_sum(mylist)
+    g.es("sum is:", sum)
+    Problem 2
+
+    Write a function that combines two lists by alternatingly taking elements. For example: given the two lists [a, b, c] and [1, 2, 3], the function should return [a, 1, b, 2, c, 3].
+    Problem 3
+
+    Write a function that computes the list of the first 100 Fibonacci numbers. By definition, the first two numbers in the Fibonacci sequence are 0 and 1, and each subsequent number is the sum of the previous two. As an example, here are the first 10 Fibonnaci numbers: 0, 1, 1, 2, 3, 5, 8, 13, 21, and 34.
+    Problem 4
+
+    Write a function that given a list of non negative integers, arranges them such that they form the largest possible number. For example, given [50, 2, 1, 9], the largest formed number is 95021.
+    Problem 5
+
+    Write a program that outputs all possibilities to put + or - or nothing between the numbers 1, 2, ..., 9 (in this order) such that the result is always 100. For example: 1 + 2 + 34 – 5 + 67 – 8 + 9 = 100.
     @cherrypy.expose
     def interpolation(self, small_gear_no=18, gear_type=1):
         SQLite連結 = Store(SQLiteWriter(_curdir+"/lewis.db", frozen=True))
